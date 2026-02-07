@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Missed Call Recovery - Never Lose a Customer Again</title>
-    <meta name="description" content="AI-powered missed call recovery system for local businesses. Convert every missed call into a scheduled appointment automatically.">
+    <meta name="description" content="AI-powered missed call recovery for local service businesses. Convert missed calls into scheduled appointments automatically.">
+    <meta property="og:title" content="AI Missed Call Recovery - Never Lose a Customer Again">
+    <meta property="og:description" content="Recover missed calls automatically and book more appointments in minutes. Built for local service businesses.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://aicallrecovery.com/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,24 +21,24 @@
         }
 
         :root {
-            --primary: #8b5cf6;
-            --primary-light: #a78bfa;
-            --primary-dark: #7c3aed;
-            --secondary: #ec4899;
-            --accent: #06b6d4;
-            --dark: #1e1b4b;
+            --primary: #14b8a6;
+            --primary-light: #5eead4;
+            --primary-dark: #0f766e;
+            --secondary: #f59e0b;
+            --accent: #38bdf8;
+            --dark: #0b1020;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.18);
-            --shadow-color: rgba(139, 92, 246, 0.3);
+            --shadow-color: rgba(20, 184, 166, 0.35);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3b0764 100%);
+            background: linear-gradient(135deg, #0b1020 0%, #0f172a 55%, #134e4a 100%);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -42,7 +50,7 @@
             position: fixed;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.35) 0%, transparent 70%);
             border-radius: 50%;
             top: -250px;
             right: -250px;
@@ -55,7 +63,7 @@
             position: fixed;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, transparent 70%);
             border-radius: 50%;
             bottom: -200px;
             left: -200px;
@@ -104,6 +112,10 @@
             z-index: 1;
         }
 
+        section {
+            scroll-margin-top: 90px;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -139,6 +151,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -171,9 +184,25 @@
             position: relative;
         }
 
+        .hero .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(20, 184, 166, 0.12);
+            border: 1px solid rgba(94, 234, 212, 0.35);
+            color: var(--text-primary);
+            padding: 0.4rem 0.95rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.2px;
+        }
+
         .hero h1 {
             font-size: 4rem;
             font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
             margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
             -webkit-background-clip: text;
@@ -192,6 +221,26 @@
             margin-left: auto;
             margin-right: auto;
             animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero .quick-points {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: -1.5rem 0 2.5rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .hero .quick-points span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.85rem;
+            border-radius: 999px;
         }
 
         .cta-group {
@@ -307,6 +356,7 @@
         .stat-number {
             font-size: 3.5rem;
             font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -328,6 +378,7 @@
         .section-header h2 {
             font-size: 3rem;
             font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
             -webkit-background-clip: text;
@@ -385,6 +436,7 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: white;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .step-card p {
@@ -405,19 +457,19 @@
         }
 
         /* Testimonials */
-        .testimonials {
+        .founders {
             padding: 6rem 0;
             background: rgba(0, 0, 0, 0.2);
         }
 
-        .testimonials-grid {
+        .founders-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .testimonial-card {
+        .founder-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             border-radius: 20px;
@@ -426,48 +478,22 @@
             transition: all 0.4s ease;
         }
 
-        .testimonial-card:hover {
+        .founder-card:hover {
             background: rgba(255, 255, 255, 0.08);
             transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 60px rgba(20, 184, 166, 0.35);
         }
 
-        .testimonial-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .author-info h4 {
-            font-size: 1.1rem;
+        .founder-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
             color: white;
-            margin-bottom: 0.25rem;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .author-info p {
-            font-size: 0.9rem;
+        .founder-card p {
             color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         /* Pricing */
@@ -527,11 +553,13 @@
             font-weight: 700;
             margin-bottom: 1rem;
             color: white;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .plan-price {
             font-size: 3.5rem;
             font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -668,6 +696,12 @@
             color: white;
         }
 
+        .form-note {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
         .submit-button {
             width: 100%;
             padding: 1.25rem;
@@ -756,6 +790,17 @@
             color: var(--text-secondary);
         }
 
+        .nav-cta:focus-visible,
+        .cta-primary:focus-visible,
+        .cta-secondary:focus-visible,
+        .plan-button:focus-visible,
+        .submit-button:focus-visible,
+        .form-group input:focus-visible,
+        .form-group select:focus-visible {
+            outline: 3px solid rgba(94, 234, 212, 0.8);
+            outline-offset: 2px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -794,6 +839,10 @@
             .form-container {
                 padding: 1.5rem;
             }
+
+            .hero .quick-points {
+                gap: 0.75rem;
+            }
         }
 
         /* Scroll animations */
@@ -818,13 +867,21 @@
                 transform: translateY(0);
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <a href="#" class="logo">✨ AI Call Recovery</a>
+            <a href="#" class="logo">AI Call Recovery</a>
             <a href="#form" class="nav-cta">Start Free Trial</a>
         </div>
     </nav>
@@ -832,8 +889,14 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
+            <div class="eyebrow">For local service businesses</div>
             <h1>Never Lose a Customer to a Missed Call</h1>
-            <p class="subtitle">AI-powered system that automatically recovers missed calls and converts them into scheduled appointments in under 60 seconds</p>
+            <p class="subtitle">AI-powered recovery that follows up instantly and books appointments automatically while your team stays focused.</p>
+            <div class="quick-points">
+                <span>⚡ Follow up in 60 seconds</span>
+                <span>📅 Book directly to your calendar</span>
+                <span>🛠️ Setup in 5 minutes</span>
+            </div>
             
             <div class="cta-group">
                 <a href="#form" class="cta-primary">Start Free 14-Day Trial</a>
@@ -952,50 +1015,32 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials">
+    <section class="founders">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Loved by Local Businesses</h2>
-                <p>See what our customers are saying</p>
+                <h2>Founding Partner Program</h2>
+                <p>Be one of the first businesses to shape the product and lock in early pricing.</p>
             </div>
 
-            <div class="testimonials-grid">
-                <div class="testimonial-card animate-on-scroll">
-                    <p class="testimonial-text">"We were losing 15-20 potential patients every week. Since implementing AI Call Recovery, we've booked 87% of those calls. That's an extra $18K monthly!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">DR</div>
-                        <div class="author-info">
-                            <h4>Dr. Rachel Martinez</h4>
-                            <p>Martinez Dental Care</p>
-                        </div>
-                    </div>
+            <div class="founders-grid">
+                <div class="founder-card animate-on-scroll">
+                    <h3>Priority Onboarding</h3>
+                    <p>White-glove setup for your phone system and calendar so you start booking fast.</p>
                 </div>
-                <div class="testimonial-card animate-on-scroll">
-                    <p class="testimonial-text">"The ROI is insane. We pay $199/month and recover at least $12K in appointments that would have been lost. Like having a 24/7 receptionist for a fraction of the cost."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JC</div>
-                        <div class="author-info">
-                            <h4>Jennifer Chen</h4>
-                            <p>Radiance Med Spa</p>
-                        </div>
-                    </div>
+                <div class="founder-card animate-on-scroll">
+                    <h3>Direct Product Input</h3>
+                    <p>Influence features and messaging to match your industry’s real-world needs.</p>
                 </div>
-                <div class="testimonial-card animate-on-scroll">
-                    <p class="testimonial-text">"Setup took 10 minutes. First week, we recovered 23 missed calls and booked 14 jobs. This tool pays for itself 50x over. Absolute no-brainer."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MJ</div>
-                        <div class="author-info">
-                            <h4>Mike Johnson</h4>
-                            <p>Elite HVAC Services</p>
-                        </div>
-                    </div>
+                <div class="founder-card animate-on-scroll">
+                    <h3>Locked-In Founding Rate</h3>
+                    <p>Keep early partner pricing as new features and integrations roll out.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pricing -->
-    <section class="pricing">
+    <section id="pricing" class="pricing">
         <div class="container">
             <div class="section-header animate-on-scroll">
                 <h2>Simple, Transparent Pricing</h2>
@@ -1019,7 +1064,7 @@
                 <div class="pricing-card featured animate-on-scroll">
                     <div class="featured-badge">Most Popular</div>
                     <div class="plan-name">Growth</div>
-                    <div class="plan-price">$199<span>/mo</span></div>
+                    <div class="plan-price">$149<span>/mo</span></div>
                     <ul class="plan-features">
                         <li>Up to 200 missed calls/month</li>
                         <li>AI voice + text responses</li>
@@ -1033,7 +1078,7 @@
 
                 <div class="pricing-card animate-on-scroll">
                     <div class="plan-name">Pro</div>
-                    <div class="plan-price">$299<span>/mo</span></div>
+                    <div class="plan-price">$199<span>/mo</span></div>
                     <ul class="plan-features">
                         <li>Unlimited missed calls</li>
                         <li>Full AI voice capabilities</li>
@@ -1056,24 +1101,24 @@
                 <p>No credit card required. Get set up in under 5 minutes.</p>
 
                 <div class="form-container">
-                    <div id="successMessage" class="success-message">
+                    <div id="successMessage" class="success-message" role="status" aria-live="polite">
                         🎉 Success! We'll contact you within 24 hours to get you set up.
                     </div>
 
                     <form id="intakeForm">
                         <div class="form-group">
                             <label for="businessName">Business Name *</label>
-                            <input type="text" id="businessName" name="businessName" required>
+                            <input type="text" id="businessName" name="businessName" autocomplete="organization" required>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" autocomplete="tel" required>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
                         </div>
 
                         <div class="form-group">
@@ -1094,6 +1139,7 @@
 
                         <button type="submit" class="submit-button">Start Free Trial →</button>
                     </form>
+                    <p class="form-note">We’ll never share your information. Cancel anytime.</p>
                 </div>
             </div>
         </div>
@@ -1132,7 +1178,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2024 AI Call Recovery. All rights reserved.</p>
+                <p>&copy; 2026 AI Call Recovery. All rights reserved.</p>
             </div>
         </div>
     </footer>

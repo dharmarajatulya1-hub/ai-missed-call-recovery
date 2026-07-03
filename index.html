@@ -1,1290 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Missed Call Recovery - Never Lose a Customer Again</title>
-    <meta name="description" content="AI-powered missed call recovery for local service businesses. Convert missed calls into scheduled appointments automatically.">
-    <meta property="og:title" content="AI Missed Call Recovery - Never Lose a Customer Again">
-    <meta property="og:description" content="Recover missed calls automatically and book more appointments in minutes. Built for local service businesses.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://aicallrecovery.com/og.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #14b8a6;
-            --primary-light: #5eead4;
-            --primary-dark: #0f766e;
-            --secondary: #f59e0b;
-            --accent: #38bdf8;
-            --dark: #0b1020;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --shadow-color: rgba(20, 184, 166, 0.35);
-        }
-
-        body {
-            font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: linear-gradient(135deg, #0b1020 0%, #0f172a 55%, #134e4a 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated background elements */
-        body::before {
-            content: '';
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(20, 184, 166, 0.35) 0%, transparent 70%);
-            border-radius: 50%;
-            top: -250px;
-            right: -250px;
-            animation: float 20s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.28) 0%, transparent 70%);
-            border-radius: 50%;
-            bottom: -200px;
-            left: -200px;
-            animation: float 15s ease-in-out infinite reverse;
-            z-index: 0;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        /* Glass morphism utility classes */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        section {
-            scroll-margin-top: 90px;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-            background: rgba(30, 27, 75, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            animation: slideDown 0.5s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-cta {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .nav-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px var(--shadow-color);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 10rem 0 6rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(20, 184, 166, 0.12);
-            border: 1px solid rgba(94, 234, 212, 0.35);
-            color: var(--text-primary);
-            padding: 0.4rem 0.95rem;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.2px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            font-family: 'Space Grotesk', sans-serif;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero .quick-points {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin: -1.5rem 0 2.5rem;
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .hero .quick-points span {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0.5rem 0.85rem;
-            border-radius: 999px;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .cta-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 1.25rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.125rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .cta-primary:hover::before {
-            left: 100%;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 60px var(--shadow-color);
-        }
-
-        .cta-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 1.25rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.125rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 4rem;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease 0.6s both;
-        }
-
-        .trust-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .trust-badge svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--primary-light);
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 4rem 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-        }
-
-        .section-header p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 6rem 0;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step-card {
-            position: relative;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 0 auto 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .step-card:hover .step-number {
-            transform: rotate(5deg) scale(1.1);
-            box-shadow: 0 15px 40px var(--shadow-color);
-        }
-
-        .step-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .step-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Features Grid */
-        .features {
-            padding: 6rem 0;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        /* Testimonials */
-        .founders {
-            padding: 6rem 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .founders-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .founder-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            transition: all 0.4s ease;
-        }
-
-        .founder-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(20, 184, 166, 0.35);
-        }
-
-        .founder-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 0.75rem;
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .founder-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Pricing */
-        .pricing {
-            padding: 6rem 0;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 2.5rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .pricing-card.featured {
-            background: rgba(139, 92, 246, 0.1);
-            border: 2px solid var(--primary);
-            transform: scale(1.05);
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 70px rgba(139, 92, 246, 0.5);
-        }
-
-        .pricing-card.featured:hover {
-            transform: translateY(-10px) scale(1.07);
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .plan-name {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .plan-price {
-            font-size: 3.5rem;
-            font-weight: 900;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-price span {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-        }
-
-        .plan-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-
-        .plan-features li {
-            padding: 0.75rem 0;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .plan-features li::before {
-            content: "✓";
-            color: var(--primary-light);
-            font-weight: 900;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .plan-button {
-            width: 100%;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .plan-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px var(--shadow-color);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 6rem 0;
-            text-align: center;
-        }
-
-        .cta-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 4rem 3rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-box h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-box p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        /* Form */
-        .form-container {
-            max-width: 600px;
-            margin: 2rem auto 0;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-
-        .form-group input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .form-group select {
-            cursor: pointer;
-        }
-
-        .form-group select option {
-            background: var(--dark);
-            color: white;
-        }
-
-        .form-note {
-            margin-top: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .submit-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px var(--shadow-color);
-        }
-
-        .success-message {
-            display: none;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #6ee7b7;
-            padding: 1.25rem;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: slideInDown 0.5s ease;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(20px);
-            padding: 4rem 0 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: white;
-            font-weight: 700;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: var(--primary-light);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .nav-cta:focus-visible,
-        .cta-primary:focus-visible,
-        .cta-secondary:focus-visible,
-        .plan-button:focus-visible,
-        .submit-button:focus-visible,
-        .form-group input:focus-visible,
-        .form-group select:focus-visible {
-            outline: 3px solid rgba(94, 234, 212, 0.8);
-            outline-offset: 2px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.125rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .cta-group {
-                flex-direction: column;
-            }
-
-            .cta-primary,
-            .cta-secondary {
-                width: 100%;
-            }
-
-            nav .container {
-                padding: 0 1rem;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .pricing-card.featured {
-                transform: scale(1);
-            }
-
-            .form-container {
-                padding: 1.5rem;
-            }
-
-            .hero .quick-points {
-                gap: 0.75rem;
-            }
-        }
-
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Svaraa — AI voice assistant that answers every missed call</title>
+<meta name="description" content="Svaraa answers the calls your local business can't — in a warm, natural voice — then books the job straight into your calendar. No missed customers, no phone tag. Live in five minutes.">
+<meta property="og:title" content="Svaraa — Never lose a customer to a missed call">
+<meta property="og:description" content="An AI voice assistant that answers missed calls and books appointments automatically. Built for local service businesses.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://svaraa.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  ::selection { background: #2E5A49; color: #FBF7F0; }
+  section[id] { scroll-margin-top: 84px; }
+
+  @keyframes svaraaWave { 0%,100% { transform: scaleY(0.28); } 50% { transform: scaleY(1); } }
+  @keyframes svaraaPulse { 0% { transform: scale(0.9); opacity: 0.55; } 100% { transform: scale(2.2); opacity: 0; } }
+  @keyframes svaraaBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  /* Hover states (translated from the design's style-hover attributes) */
+  .btn-accent { transition: filter .2s ease; }
+  .btn-accent:hover { filter: brightness(0.93); }
+  .btn-ghost { transition: background .2s ease; }
+  .btn-ghost:hover { background: #F3ECDF; }
+  .btn-soft { transition: background .2s ease; }
+  .btn-soft:hover { background: #EAE0CE; }
+  .nav-link { transition: color .2s ease; }
+  .nav-link:hover { color: #23201B; }
+  .foot-link { transition: color .2s ease; }
+  .foot-link:hover { color: var(--accent); }
+
+  /* Form field focus + accessible focus rings */
+  .field:focus { outline: none; border-color: #2E5A49 !important; box-shadow: 0 0 0 3px rgba(46,90,73,0.15); }
+  a:focus-visible, button:focus-visible, .field:focus-visible {
+    outline: 3px solid rgba(46,90,73,0.55); outline-offset: 2px; border-radius: 6px;
+  }
+
+  /* Responsive (the source design is desktop-first with fixed grids) */
+  @media (max-width: 940px) {
+    .nav-links { display: none !important; }
+    .stat-grid { grid-template-columns: repeat(2,1fr) !important; }
+    .feature-grid { grid-template-columns: repeat(2,1fr) !important; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
+    .pipeline-grid { grid-template-columns: repeat(2,1fr) !important; row-gap: 36px !important; }
+    .pipeline-line { display: none !important; }
+    .hero-title { font-size: 46px !important; }
+    .section-title { font-size: 36px !important; }
+  }
+  @media (max-width: 560px) {
+    .stat-grid { grid-template-columns: 1fr !important; }
+    .feature-grid { grid-template-columns: 1fr !important; }
+    .pipeline-grid { grid-template-columns: 1fr !important; }
+    .nav-phone { display: none !important; }
+    .hero-title { font-size: 38px !important; }
+    .section-title { font-size: 28px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="#" class="logo">Svaraa</a>
-            <a href="#form" class="nav-cta">Start Free Trial</a>
-        </div>
+<div style="--accent:#C2603F; background:#FBF7F0; color:#23201B; font-family:'Hanken Grotesk',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; background:rgba(251,247,240,0.82); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #EBE2D2;">
+    <nav style="max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="#top" style="display:flex; align-items:center; gap:9px; text-decoration:none;">
+        <span style="width:11px; height:11px; border-radius:50%; background:var(--accent); display:inline-block;"></span>
+        <span style="font-family:'Newsreader',serif; font-weight:600; font-size:25px; letter-spacing:-0.01em; color:#23201B;">Svaraa</span>
+      </a>
+      <div class="nav-links" style="display:flex; align-items:center; gap:34px;">
+        <a href="#how" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">How it works</a>
+        <a href="#features" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">Features</a>
+        <a href="#pricing" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">Pricing</a>
+        <a href="#founding" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">Founding program</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <a href="tel:+12016168355" class="nav-phone" style="text-decoration:none; color:#23201B; font-size:15px; font-weight:600; font-family:'Spline Sans Mono',monospace; white-space:nowrap;">(201) 616-8355</a>
+        <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; font-weight:600; font-size:15px; padding:11px 20px; border-radius:11px; text-decoration:none; white-space:nowrap;">Start free trial</a>
+      </div>
     </nav>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="eyebrow">For local service businesses</div>
-            <h1>Never Lose a Customer to a Missed Call</h1>
-            <p class="subtitle">AI-powered recovery that follows up instantly and books appointments automatically while your team stays focused.</p>
-            <div class="quick-points">
-                <span>⚡ Follow up in 60 seconds</span>
-                <span>📅 Book directly to your calendar</span>
-                <span>🛠️ Setup in 5 minutes</span>
-            </div>
-            
-            <div class="cta-group">
-                <a href="#form" class="cta-primary">Start Free 14-Day Trial</a>
-                <a href="#how" class="cta-secondary">See How It Works</a>
-            </div>
+  <!-- HERO -->
+  <section id="top" style="max-width:1180px; margin:0 auto; padding:76px 32px 60px; display:flex; gap:60px; align-items:center; flex-wrap:wrap;">
+    <div style="flex:1 1 480px; min-width:320px;">
+      <div style="display:inline-flex; align-items:center; gap:9px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500; background:#EBF0EA; border:1px solid #D6E1D3; padding:7px 13px; border-radius:100px;">
+        <span style="width:6px; height:6px; border-radius:50%; background:#2E5A49; display:inline-block;"></span>
+        AI voice assistant for local business
+      </div>
+      <h1 class="hero-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:62px; line-height:1.02; letter-spacing:-0.022em; margin:22px 0 0; color:#23201B; text-wrap:balance;">
+        Every missed call is money <span style="font-style:italic; color:var(--accent);">walking out the door.</span>
+      </h1>
+      <p style="font-size:20px; line-height:1.55; color:#5B5346; margin:24px 0 0; max-width:540px;">
+        Svaraa answers the calls you can't — in a warm, natural voice — then books the job straight into your calendar. No missed customers. No phone tag. Live in five minutes.
+      </p>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:34px;">
+        <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:#fff; font-weight:600; font-size:17px; padding:16px 28px; border-radius:12px; text-decoration:none;">Start free 14-day trial →</a>
+        <a href="#how" class="btn-ghost" style="display:inline-flex; align-items:center; gap:9px; background:transparent; color:#23201B; border:1px solid #D8CDBA; font-weight:600; font-size:17px; padding:16px 26px; border-radius:12px; text-decoration:none;">See how it works</a>
+      </div>
+      <div style="display:flex; gap:26px; flex-wrap:wrap; margin-top:28px; font-size:14.5px; color:#6E665A;">
+        <span style="display:inline-flex; align-items:center; gap:8px;"><span style="color:#2E5A49; font-weight:700;">✓</span> No credit card</span>
+        <span style="display:inline-flex; align-items:center; gap:8px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Setup in 5 minutes</span>
+        <span style="display:inline-flex; align-items:center; gap:8px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Cancel anytime</span>
+      </div>
+    </div>
 
-            <div class="trust-badges">
-                <div class="trust-badge">
-                    <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    <span>No Credit Card Required</span>
-                </div>
-                <div class="trust-badge">
-                    <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    <span>Setup in 5 Minutes</span>
-                </div>
-                <div class="trust-badge">
-                    <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    <span>Cancel Anytime</span>
-                </div>
+    <!-- VOICE MOTIF -->
+    <div style="flex:1 1 400px; min-width:320px; display:flex; justify-content:center;">
+      <div style="position:relative; width:100%; max-width:440px;">
+        <div style="position:absolute; top:-26px; left:-26px; width:130px; height:130px; border-radius:50%; background:var(--accent); opacity:0.12;"></div>
+        <div style="position:absolute; bottom:-30px; right:-20px; width:110px; height:110px; border-radius:50%; background:#2E5A49; opacity:0.12;"></div>
+        <div style="position:relative; background:#fff; border:1px solid #EBE2D2; border-radius:24px; padding:28px; box-shadow:0 34px 70px -34px rgba(46,90,73,0.4);">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:inline-flex; align-items:center; gap:9px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E5A49; font-weight:600;">
+              <span style="position:relative; width:9px; height:9px; display:inline-block;">
+                <span style="position:absolute; inset:0; border-radius:50%; background:#2E5A49; animation:svaraaPulse 1.8s ease-out infinite;"></span>
+                <span style="position:absolute; inset:0; border-radius:50%; background:#2E5A49;"></span>
+              </span>
+              Svaraa is on the call
             </div>
+            <span style="font-family:'Spline Sans Mono',monospace; font-size:13px; color:#9A9184;">0:42</span>
+          </div>
+
+          <div style="margin:22px 0; padding:0 2px;">
+            <div id="waveform" style="display:flex; align-items:center; justify-content:space-between; gap:3px; height:68px;"></div>
+          </div>
+
+          <p style="font-family:'Newsreader',serif; font-style:italic; font-size:20px; line-height:1.4; color:#33302A; margin:0;">
+            “Thanks for calling Miller Plumbing! I can get you booked for tomorrow at 9 — does that work?”
+          </p>
+
+          <div style="margin-top:24px; padding-top:20px; border-top:1px solid #F0E9DB; display:flex; align-items:center; gap:12px;">
+            <span style="flex-shrink:0; width:34px; height:34px; border-radius:9px; background:#EBF0EA; color:#2E5A49; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700;">✓</span>
+            <div style="line-height:1.3;">
+              <div style="font-weight:600; font-size:15.5px; color:#23201B;">Appointment booked · Tue 9:00 AM</div>
+              <div style="font-size:13px; color:#8A8175;">Added to Google Calendar · owner notified</div>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid animate-on-scroll">
-                <div class="stat-card">
-                    <div class="stat-number">27%</div>
-                    <div class="stat-label">of calls go unanswered</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">$1.2K</div>
-                    <div class="stat-label">avg revenue per missed call</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">85%</div>
-                    <div class="stat-label">won't call back</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">$50K+</div>
-                    <div class="stat-label">annual loss for SMBs</div>
-                </div>
-            </div>
+  <!-- COST BAND -->
+  <section style="margin-top:20px;">
+  <div style="background:#213E33; color:#EFEAE0;">
+    <div style="max-width:1180px; margin:0 auto; padding:70px 32px;">
+      <div style="max-width:640px;">
+        <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#9DC3B2; font-weight:500;">The problem</div>
+        <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:42px; line-height:1.08; letter-spacing:-0.02em; margin:14px 0 0; color:#FBF7F0;">The quiet math of a missed call</h2>
+        <p style="font-size:18px; line-height:1.55; margin:14px 0 0; color:#B9C6BE;">When the phone rings and no one picks up, the customer doesn't wait — they call the next name on the list.</p>
+      </div>
+      <div class="stat-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px;">
+        <div style="border-top:2px solid #3C6252; padding-top:20px;">
+          <div style="font-family:'Newsreader',serif; font-weight:500; font-size:52px; line-height:1; color:#fff;">27<span style="font-size:30px;">%</span></div>
+          <div style="font-size:15px; color:#B9C6BE; margin-top:10px; line-height:1.4;">of calls to local businesses go unanswered</div>
         </div>
-    </section>
-
-    <!-- How It Works -->
-    <section id="how" class="how-it-works">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2>How It Works</h2>
-                <p>Four simple steps to never lose another customer</p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card animate-on-scroll">
-                    <div class="step-number">1</div>
-                    <h3>AI Detects</h3>
-                    <p>System instantly identifies missed calls during busy hours or after-hours</p>
-                </div>
-                <div class="step-card animate-on-scroll">
-                    <div class="step-number">2</div>
-                    <h3>Smart Reply</h3>
-                    <p>Personalized text sent within 60 seconds with your booking link</p>
-                </div>
-                <div class="step-card animate-on-scroll">
-                    <div class="step-number">3</div>
-                    <h3>Easy Booking</h3>
-                    <p>Customer schedules directly in your calendar—no phone tag</p>
-                </div>
-                <div class="step-card animate-on-scroll">
-                    <div class="step-number">4</div>
-                    <h3>You're Notified</h3>
-                    <p>Instant alert with customer details and appointment confirmation</p>
-                </div>
-            </div>
+        <div style="border-top:2px solid #3C6252; padding-top:20px;">
+          <div style="font-family:'Newsreader',serif; font-weight:500; font-size:52px; line-height:1; color:#fff;">$1.2K</div>
+          <div style="font-size:15px; color:#B9C6BE; margin-top:10px; line-height:1.4;">average revenue lost per missed call</div>
         </div>
-    </section>
-
-    <!-- Features -->
-    <section class="features">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2>Powerful Features</h2>
-                <p>Everything you need to recover revenue from missed calls</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="glass-card animate-on-scroll">
-                    <h3>🤖 AI-Powered Responses</h3>
-                    <p>Natural language processing creates personalized messages that feel human and professional</p>
-                </div>
-                <div class="glass-card animate-on-scroll">
-                    <h3>📅 Calendar Integration</h3>
-                    <p>Syncs with Google Calendar, Outlook, and popular scheduling tools instantly</p>
-                </div>
-                <div class="glass-card animate-on-scroll">
-                    <h3>⚡ 60-Second Response</h3>
-                    <p>Reaches out within 60 seconds while customer interest is still hot</p>
-                </div>
-                <div class="glass-card animate-on-scroll">
-                    <h3>📊 Analytics Dashboard</h3>
-                    <p>Track recovery rates, revenue saved, and conversion metrics in real-time</p>
-                </div>
-                <div class="glass-card animate-on-scroll">
-                    <h3>🔔 Smart Notifications</h3>
-                    <p>Get instant alerts via SMS, email, or Slack when appointments are booked</p>
-                </div>
-                <div class="glass-card animate-on-scroll">
-                    <h3>🔁 Automated Follow-Ups</h3>
-                    <p>Smart reminders bring customers back if they don’t book on the first reply</p>
-                </div>
-            </div>
+        <div style="border-top:2px solid #3C6252; padding-top:20px;">
+          <div style="font-family:'Newsreader',serif; font-weight:500; font-size:52px; line-height:1; color:#fff;">85<span style="font-size:30px;">%</span></div>
+          <div style="font-size:15px; color:#B9C6BE; margin-top:10px; line-height:1.4;">of callers never call back a second time</div>
         </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="founders">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2>Founding Partner Program</h2>
-                <p>Be one of the first businesses to shape the product and lock in early pricing.</p>
-            </div>
-
-            <div class="founders-grid">
-                <div class="founder-card animate-on-scroll">
-                    <h3>Priority Onboarding</h3>
-                    <p>White-glove setup for your phone system and calendar so you start booking fast.</p>
-                </div>
-                <div class="founder-card animate-on-scroll">
-                    <h3>Direct Product Input</h3>
-                    <p>Influence features and messaging to match your industry’s real-world needs.</p>
-                </div>
-                <div class="founder-card animate-on-scroll">
-                    <h3>Locked-In Founding Rate</h3>
-                    <p>Keep early partner pricing as new features and integrations roll out.</p>
-                </div>
-            </div>
+        <div style="border-top:2px solid var(--accent); padding-top:20px;">
+          <div style="font-family:'Newsreader',serif; font-weight:500; font-size:52px; line-height:1; color:#EDA588;">$50K+</div>
+          <div style="font-size:15px; color:#B9C6BE; margin-top:10px; line-height:1.4;">slipping away from the average SMB each year</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+  </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your business</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card animate-on-scroll">
-                    <div class="plan-name">Starter</div>
-                    <div class="plan-price">$99<span>/mo</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 50 missed calls/month</li>
-                        <li>AI-powered text responses</li>
-                        <li>Calendar integration</li>
-                        <li>Basic analytics</li>
-                        <li>Email support</li>
-                    </ul>
-                    <button class="plan-button" onclick="scrollToForm('Starter')">Start Free Trial</button>
-                </div>
-
-                <div class="pricing-card featured animate-on-scroll">
-                    <div class="featured-badge">Most Popular</div>
-                    <div class="plan-name">Growth</div>
-                    <div class="plan-price">$149<span>/mo</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 200 missed calls/month</li>
-                        <li>AI voice + text responses</li>
-                        <li>Priority calendar sync</li>
-                        <li>Advanced analytics</li>
-                        <li>SMS notifications</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <button class="plan-button" onclick="scrollToForm('Growth')">Start Free Trial</button>
-                </div>
-
-                <div class="pricing-card animate-on-scroll">
-                    <div class="plan-name">Pro</div>
-                    <div class="plan-price">$199<span>/mo</span></div>
-                    <ul class="plan-features">
-                        <li>Unlimited missed calls</li>
-                        <li>Full AI voice capabilities</li>
-                        <li>Multi-location support</li>
-                        <li>Custom integrations</li>
-                        <li>White-label options</li>
-                        <li>Dedicated account manager</li>
-                    </ul>
-                    <button class="plan-button" onclick="scrollToForm('Pro')">Start Free Trial</button>
-                </div>
-            </div>
+  <!-- HOW IT WORKS -->
+  <section id="how" style="max-width:1180px; margin:0 auto; padding:86px 32px 40px;">
+    <div style="text-align:center; max-width:640px; margin:0 auto;">
+      <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">How it works</div>
+      <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">From missed to booked in under a minute</h2>
+      <p style="font-size:18px; line-height:1.55; color:#5B5346; margin:16px 0 0;">No apps to learn. Svaraa works quietly in the background while you do the job in front of you.</p>
+    </div>
+    <div style="margin-top:54px; background:#fff; border:1px solid #EBE2D2; border-radius:22px; padding:44px 40px 40px;">
+      <!-- endpoint labels -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:34px;">
+        <span style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; color:#A94F31; background:#F7E6DD; padding:7px 13px; border-radius:100px;">☎ Call you missed</span>
+        <span style="flex:1; height:1px; background:repeating-linear-gradient(90deg,#D8CDBA 0 6px,transparent 6px 12px); margin:0 18px;"></span>
+        <span style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; color:#2E5A49; background:#EBF0EA; padding:7px 13px; border-radius:100px;">✓ Job on the books</span>
+      </div>
+      <!-- pipeline -->
+      <div style="position:relative;">
+        <div class="pipeline-line" style="position:absolute; top:28px; left:11%; right:11%; height:2px; background:linear-gradient(90deg,#2E5A49,var(--accent)); opacity:0.4;"></div>
+        <div class="pipeline-grid" style="position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+          <div style="text-align:center;">
+            <div style="width:58px; height:58px; border-radius:50%; background:#fff; border:2px solid #2E5A49; color:#2E5A49; display:flex; align-items:center; justify-content:center; margin:0 auto; font-family:'Spline Sans Mono',monospace; font-weight:600; font-size:16px;">01</div>
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:18px 0 0; color:#23201B;">Picks up</h3>
+            <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:7px auto 0; max-width:190px;">Answers the second you can't — day or night.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:58px; height:58px; border-radius:50%; background:#fff; border:2px solid #2E5A49; color:#2E5A49; display:flex; align-items:center; justify-content:center; margin:0 auto; font-family:'Spline Sans Mono',monospace; font-weight:600; font-size:16px;">02</div>
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:18px 0 0; color:#23201B;">Talks it out</h3>
+            <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:7px auto 0; max-width:190px;">A real conversation in your business name.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:58px; height:58px; border-radius:50%; background:#fff; border:2px solid #2E5A49; color:#2E5A49; display:flex; align-items:center; justify-content:center; margin:0 auto; font-family:'Spline Sans Mono',monospace; font-weight:600; font-size:16px;">03</div>
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:18px 0 0; color:#23201B;">Books the job</h3>
+            <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:7px auto 0; max-width:190px;">Straight into Google Calendar or Outlook.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:58px; height:58px; border-radius:50%; background:var(--accent); border:2px solid var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-family:'Spline Sans Mono',monospace; font-weight:600; font-size:16px;">04</div>
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:18px 0 0; color:#23201B;">Notifies you</h3>
+            <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:7px auto 0; max-width:190px;">Every caller and detail, texted instantly.</p>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- CTA Section with Form -->
-    <section id="form" class="cta-section">
-        <div class="container">
-            <div class="cta-box animate-on-scroll">
-                <h2>Start Your Free Trial Today</h2>
-                <p>No credit card required. Get set up in under 5 minutes.</p>
+  <!-- FEATURES -->
+  <section id="features" style="max-width:1180px; margin:0 auto; padding:66px 32px 40px;">
+    <div style="max-width:640px;">
+      <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">What it does</div>
+      <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">A receptionist that never clocks out</h2>
+    </div>
+    <div class="feature-grid" style="margin-top:40px; border:1px solid #EBE2D2; border-radius:22px; overflow:hidden; background:#EBE2D2; display:grid; grid-template-columns:repeat(3,1fr); gap:1px;">
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Voice</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">Sounds genuinely human</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Warm and natural — never a robotic phone tree.</p>
+      </div>
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Always on</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">Answers 24/7</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Nights, weekends, lunch rushes — never voicemail.</p>
+      </div>
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Booking</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">Straight to your calendar</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Syncs with Google Calendar and Outlook.</p>
+      </div>
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Recovery</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">Calls back in seconds</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Rings missed numbers while interest is hot.</p>
+      </div>
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Follow-up</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">Gentle reminders</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Brings back callers who didn't book yet.</p>
+      </div>
+      <div style="background:#FBF7F0; padding:30px;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:7px; height:7px; border-radius:50%; background:var(--accent);"></span><span style="font-family:'Spline Sans Mono',monospace; font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8175; font-weight:600;">Notify</span></div>
+        <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:22px; margin:14px 0 0; color:#23201B;">You stay in the loop</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:#6E665A; margin:8px 0 0;">Instant text, email, or Slack on every booking.</p>
+      </div>
+    </div>
+  </section>
 
-                <div class="form-container">
-                    <div id="successMessage" class="success-message" role="status" aria-live="polite">
-                        🎉 Success! We'll contact you within 24 hours to get you set up.
-                    </div>
-
-                    <form id="intakeForm">
-                        <div class="form-group">
-                            <label for="businessName">Business Name *</label>
-                            <input type="text" id="businessName" name="businessName" autocomplete="organization" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" autocomplete="tel" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" autocomplete="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="businessType">Business Type *</label>
-                            <select id="businessType" name="businessType" required>
-                                <option value="">Select your business type</option>
-                                <option value="dental">Dental Practice</option>
-                                <option value="medspa">Med Spa / Aesthetics</option>
-                                <option value="hvac">HVAC Services</option>
-                                <option value="plumbing">Plumbing</option>
-                                <option value="electrical">Electrical Services</option>
-                                <option value="legal">Legal Services</option>
-                                <option value="medical">Medical Practice</option>
-                                <option value="salon">Salon / Beauty</option>
-                                <option value="other">Other Service Business</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="submit-button">Start Free Trial →</button>
-                    </form>
-                    <p class="form-note">We’ll never share your information. Cancel anytime.</p>
-                </div>
-            </div>
+  <!-- FOUNDING PARTNER -->
+  <section id="founding" style="max-width:1180px; margin:0 auto; padding:66px 32px;">
+    <div style="background:#213E33; border-radius:26px; padding:56px 52px; color:#EFEAE0; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:-60px; right:-40px; width:220px; height:220px; border-radius:50%; background:var(--accent); opacity:0.16;"></div>
+      <div style="position:relative; display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;">
+        <div style="flex:1 1 360px; min-width:300px;">
+          <div style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#FBF7F0; font-weight:600; background:var(--accent); padding:6px 12px; border-radius:100px;">Only 25 spots left</div>
+          <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:44px; line-height:1.05; letter-spacing:-0.02em; margin:20px 0 0; color:#FBF7F0;">Founding Partner Program</h2>
+          <p style="font-size:18px; line-height:1.55; color:#B9C6BE; margin:16px 0 0; max-width:420px;">We're just getting started — and we're picking a small group of businesses to shape Svaraa and lock in early pricing for good.</p>
+          <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:9px; margin-top:28px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px 26px; border-radius:12px; text-decoration:none;">Become a founding partner →</a>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Svaraa</h4>
-                    <p>Never lose a customer to a missed call again.</p>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Product</h4>
-                    <a href="#how">How It Works</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#">Features</a>
-                    <a href="#">Case Studies</a>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <a href="#">About Us</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Contact</a>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <a href="mailto:getstarted@svaraa.co">getstarted@svaraa.co</a>
-                    <a href="tel:+12016168355">(201) 616-8355</a>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 Svaraa. All rights reserved.</p>
-            </div>
+        <div style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:2px;">
+          <div style="padding:20px 0; border-top:1px solid #3C6252;">
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:21px; margin:0; color:#fff;">Priority onboarding</h3>
+            <p style="font-size:15px; line-height:1.5; color:#B9C6BE; margin:8px 0 0;">White-glove setup for your phone system and calendar, so you start booking fast.</p>
+          </div>
+          <div style="padding:20px 0; border-top:1px solid #3C6252;">
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:21px; margin:0; color:#fff;">Direct product input</h3>
+            <p style="font-size:15px; line-height:1.5; color:#B9C6BE; margin:8px 0 0;">Shape the features and voice to fit how your industry really works.</p>
+          </div>
+          <div style="padding:20px 0; border-top:1px solid #3C6252; border-bottom:1px solid #3C6252;">
+            <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:21px; margin:0; color:#fff;">Locked-in founding rate</h3>
+            <p style="font-size:15px; line-height:1.5; color:#B9C6BE; margin:8px 0 0;">Keep your early pricing as new features and integrations roll out.</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Phone formatting
-        const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 10) value = value.slice(0, 10);
-            
-            if (value.length >= 6) {
-                value = `(${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6)}`;
-            } else if (value.length >= 3) {
-                value = `(${value.slice(0,3)}) ${value.slice(3)}`;
-            }
-            
-            e.target.value = value;
-        });
+  <!-- PRICING -->
+  <section id="pricing" style="max-width:1180px; margin:0 auto; padding:56px 32px 40px;">
+    <div style="text-align:center; max-width:600px; margin:0 auto;">
+      <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">Pricing</div>
+      <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">Simple, transparent pricing</h2>
+      <p style="font-size:18px; line-height:1.55; color:#5B5346; margin:16px 0 0;">One recovered call usually pays for the month. Every plan starts with a free 14-day trial.</p>
+    </div>
+    <div class="pricing-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:52px; align-items:start;">
+      <!-- Starter -->
+      <div style="background:#fff; border:1px solid #EBE2D2; border-radius:20px; padding:32px;">
+        <div style="font-weight:600; font-size:17px; color:#23201B;">Starter</div>
+        <div style="display:flex; align-items:baseline; gap:4px; margin:14px 0 0;"><span style="font-family:'Newsreader',serif; font-size:48px; font-weight:500; color:#23201B;">$99</span><span style="color:#8A8175; font-size:16px;">/mo</span></div>
+        <a href="#form" data-plan="Starter" class="btn-soft plan-cta" style="display:block; text-align:center; margin:22px 0; background:#F3ECDF; color:#23201B; font-weight:600; font-size:15.5px; padding:13px; border-radius:11px; text-decoration:none;">Start free trial</a>
+        <div style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:#4A4438;">
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Up to 50 missed calls / month</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> AI voice + text responses</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Calendar integration</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Basic analytics</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Email support</div>
+        </div>
+      </div>
+      <!-- Growth -->
+      <div style="background:#213E33; border:1px solid #213E33; border-radius:20px; padding:32px; color:#EFEAE0; position:relative; box-shadow:0 30px 60px -34px rgba(33,62,51,0.6);">
+        <div style="position:absolute; top:-13px; left:32px; background:var(--accent); color:#fff; font-family:'Spline Sans Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:600; padding:6px 12px; border-radius:100px;">Most popular</div>
+        <div style="font-weight:600; font-size:17px; color:#fff;">Growth</div>
+        <div style="display:flex; align-items:baseline; gap:4px; margin:14px 0 0;"><span style="font-family:'Newsreader',serif; font-size:48px; font-weight:500; color:#fff;">$149</span><span style="color:#9DB3A8; font-size:16px;">/mo</span></div>
+        <a href="#form" data-plan="Growth" class="btn-accent plan-cta" style="display:block; text-align:center; margin:22px 0; background:var(--accent); color:#fff; font-weight:600; font-size:15.5px; padding:13px; border-radius:11px; text-decoration:none;">Start free trial</a>
+        <div style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:#CBD6CF;">
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> Up to 200 missed calls / month</div>
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> Advanced AI voice conversations</div>
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> Priority calendar sync</div>
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> Advanced analytics</div>
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> SMS + Slack notifications</div>
+          <div style="display:flex; gap:10px;"><span style="color:#8FBFA8; font-weight:700;">✓</span> Priority support</div>
+        </div>
+      </div>
+      <!-- Pro -->
+      <div style="background:#fff; border:1px solid #EBE2D2; border-radius:20px; padding:32px;">
+        <div style="font-weight:600; font-size:17px; color:#23201B;">Pro</div>
+        <div style="display:flex; align-items:baseline; gap:4px; margin:14px 0 0;"><span style="font-family:'Newsreader',serif; font-size:48px; font-weight:500; color:#23201B;">$199</span><span style="color:#8A8175; font-size:16px;">/mo</span></div>
+        <a href="#form" data-plan="Pro" class="btn-soft plan-cta" style="display:block; text-align:center; margin:22px 0; background:#F3ECDF; color:#23201B; font-weight:600; font-size:15.5px; padding:13px; border-radius:11px; text-decoration:none;">Start free trial</a>
+        <div style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:#4A4438;">
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Unlimited missed calls</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Full AI voice capabilities</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Multi-location support</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Custom integrations</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> White-label options</div>
+          <div style="display:flex; gap:10px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Dedicated account manager</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Form submission with API call
-        const form = document.getElementById('intakeForm');
-        const successMessage = document.getElementById('successMessage');
+  <!-- CTA FORM -->
+  <section id="form" style="max-width:1180px; margin:0 auto; padding:70px 32px 80px;">
+    <div style="display:flex; gap:56px; flex-wrap:wrap; align-items:center; background:#F5EEE2; border:1px solid #EBE2D2; border-radius:26px; padding:52px;">
+      <div style="flex:1 1 380px; min-width:300px;">
+        <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">Get started</div>
+        <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:44px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">Stop losing calls. Start today.</h2>
+        <p style="font-size:18px; line-height:1.55; color:#5B5346; margin:16px 0 0; max-width:420px;">Tell us a little about your business and we'll have Svaraa answering your calls in under five minutes. No credit card required.</p>
+        <div style="margin-top:26px; font-size:15px; color:#6E665A; display:flex; flex-direction:column; gap:10px;">
+          <span style="display:inline-flex; align-items:center; gap:9px;"><span style="color:#2E5A49; font-weight:700;">✓</span> Free 14-day trial, cancel anytime</span>
+          <span style="display:inline-flex; align-items:center; gap:9px;"><span style="color:#2E5A49; font-weight:700;">✓</span> We'll never share your information</span>
+        </div>
+      </div>
+      <div style="flex:1 1 380px; min-width:300px;">
+        <div id="successCard" style="display:none; background:#EBF0EA; border:1px solid #D6E1D3; border-radius:18px; padding:40px; text-align:center;" role="status" aria-live="polite">
+          <div style="width:52px; height:52px; border-radius:50%; background:#2E5A49; color:#fff; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto;">✓</div>
+          <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:26px; margin:18px 0 0; color:#23201B;">You're on the list!</h3>
+          <p style="font-size:16px; color:#5B5346; margin:10px 0 0; line-height:1.5;">We'll reach out within 24 hours to get Svaraa set up for you.</p>
+        </div>
+        <form id="intakeForm" style="background:#fff; border:1px solid #EBE2D2; border-radius:18px; padding:30px; display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <label for="businessName" style="display:block; font-size:13px; font-weight:600; color:#4A4438; margin-bottom:7px;">Business name</label>
+            <input id="businessName" name="businessName" required type="text" autocomplete="organization" placeholder="Miller Plumbing" class="field" style="width:100%; padding:13px 14px; border:1px solid #DED4C3; border-radius:10px; font-size:15px; font-family:inherit; background:#FDFBF7; color:#23201B;" />
+          </div>
+          <div style="display:flex; gap:14px;">
+            <div style="flex:1;">
+              <label for="phone" style="display:block; font-size:13px; font-weight:600; color:#4A4438; margin-bottom:7px;">Phone number</label>
+              <input id="phone" name="phone" required type="tel" autocomplete="tel" placeholder="(201) 555-0100" class="field" style="width:100%; padding:13px 14px; border:1px solid #DED4C3; border-radius:10px; font-size:15px; font-family:inherit; background:#FDFBF7; color:#23201B;" />
+            </div>
+          </div>
+          <div>
+            <label for="email" style="display:block; font-size:13px; font-weight:600; color:#4A4438; margin-bottom:7px;">Email address</label>
+            <input id="email" name="email" required type="email" autocomplete="email" placeholder="you@business.com" class="field" style="width:100%; padding:13px 14px; border:1px solid #DED4C3; border-radius:10px; font-size:15px; font-family:inherit; background:#FDFBF7; color:#23201B;" />
+          </div>
+          <div>
+            <label for="businessType" style="display:block; font-size:13px; font-weight:600; color:#4A4438; margin-bottom:7px;">Business type</label>
+            <select id="businessType" name="businessType" required class="field" style="width:100%; padding:13px 14px; border:1px solid #DED4C3; border-radius:10px; font-size:15px; font-family:inherit; background:#FDFBF7; color:#23201B;">
+              <option value="">Select your business type</option>
+              <option value="dental">Dental Practice</option>
+              <option value="medspa">Med Spa / Aesthetics</option>
+              <option value="hvac">HVAC Services</option>
+              <option value="plumbing">Plumbing</option>
+              <option value="electrical">Electrical Services</option>
+              <option value="legal">Legal Services</option>
+              <option value="medical">Medical Practice</option>
+              <option value="salon">Salon / Beauty</option>
+              <option value="other">Other Service Business</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-accent" style="margin-top:4px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px; border-radius:11px; border:none; cursor:pointer; font-family:inherit;">Start free trial →</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                businessName: document.getElementById('businessName').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                businessType: document.getElementById('businessType').value,
-                timestamp: new Date().toISOString()
-            };
-            
-            try {
-                // Call the serverless API
-                const response = await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    successMessage.classList.add('show');
-                    form.reset();
-                    
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                    }, 10000);
-                } else {
-                    console.error('Submission error:', result);
-                }
-            } catch (error) {
-                console.error('Network error:', error);
-                // Still show success for demo purposes
-                successMessage.classList.add('show');
-                form.reset();
-                
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 10000);
-            }
-        });
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid #EBE2D2; background:#F7F1E7;">
+    <div style="max-width:1180px; margin:0 auto; padding:56px 32px 30px; display:flex; gap:48px; flex-wrap:wrap; justify-content:space-between;">
+      <div style="flex:1 1 260px; min-width:240px;">
+        <div style="display:flex; align-items:center; gap:9px;">
+          <span style="width:11px; height:11px; border-radius:50%; background:var(--accent); display:inline-block;"></span>
+          <span style="font-family:'Newsreader',serif; font-weight:600; font-size:24px; color:#23201B;">Svaraa</span>
+        </div>
+        <p style="font-size:15px; color:#6E665A; margin:14px 0 0; line-height:1.5; max-width:260px;">Never lose a customer to a missed call again.</p>
+      </div>
+      <div style="display:flex; gap:56px; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8175; margin-bottom:14px;">Product</div>
+          <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
+            <a href="#how" class="foot-link" style="text-decoration:none; color:#4A4438;">How it works</a>
+            <a href="#features" class="foot-link" style="text-decoration:none; color:#4A4438;">Features</a>
+            <a href="#pricing" class="foot-link" style="text-decoration:none; color:#4A4438;">Pricing</a>
+            <a href="#founding" class="foot-link" style="text-decoration:none; color:#4A4438;">Founding program</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8175; margin-bottom:14px;">Company</div>
+          <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
+            <a href="#" class="foot-link" style="text-decoration:none; color:#4A4438;">About us</a>
+            <a href="#" class="foot-link" style="text-decoration:none; color:#4A4438;">Blog</a>
+            <a href="mailto:getstarted@svaraa.co" class="foot-link" style="text-decoration:none; color:#4A4438;">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8175; margin-bottom:14px;">Contact</div>
+          <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
+            <a href="mailto:getstarted@svaraa.co" class="foot-link" style="text-decoration:none; color:#4A4438;">getstarted@svaraa.co</a>
+            <a href="tel:+12016168355" class="foot-link" style="text-decoration:none; color:#4A4438; font-family:'Spline Sans Mono',monospace;">(201) 616-8355</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1180px; margin:0 auto; padding:20px 32px 40px; border-top:1px solid #EBE2D2; font-size:13.5px; color:#8A8175;">© 2026 Svaraa. All rights reserved.</div>
+  </footer>
 
-        // Scroll to form
-        function scrollToForm(plan) {
-            document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
-            console.log('Selected plan:', plan);
+</div>
+
+<script>
+  // Build the decorative voice waveform (was {{ waveform }} in the design component)
+  (function () {
+    var wrap = document.getElementById('waveform');
+    if (!wrap) return;
+    var n = 46;
+    for (var i = 0; i < n; i++) {
+      var h = 10 + Math.round(Math.abs(Math.sin(i * 0.55) + Math.sin(i * 0.21)) * 32) + (i % 3) * 5;
+      var dur = (0.85 + (i % 5) * 0.13).toFixed(2);
+      var delay = (-((i % 7) * 0.12)).toFixed(2);
+      var accent = i % 4 === 0;
+      var bar = document.createElement('span');
+      bar.style.cssText =
+        'display:block;width:4px;height:' + h + 'px;border-radius:4px;transform-origin:center;' +
+        'background:' + (accent ? 'var(--accent)' : '#2E5A49') + ';' +
+        'opacity:' + (accent ? 0.92 : 0.5) + ';' +
+        'animation:svaraaWave ' + dur + 's ease-in-out ' + delay + 's infinite;';
+      wrap.appendChild(bar);
+    }
+  })();
+
+  // Phone number formatting → (555) 123-4567 (matches the /api/subscribe validation)
+  var phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function (e) {
+    var value = e.target.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.slice(0, 10);
+    if (value.length >= 6) {
+      value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6);
+    } else if (value.length >= 3) {
+      value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+    }
+    e.target.value = value;
+  });
+
+  // Remember which pricing plan the visitor clicked (for context on submit)
+  var selectedPlan = '';
+  document.querySelectorAll('.plan-cta').forEach(function (el) {
+    el.addEventListener('click', function () { selectedPlan = el.getAttribute('data-plan') || ''; });
+  });
+
+  // Form submission → POST to the serverless endpoint, then swap in the success card
+  var form = document.getElementById('intakeForm');
+  var successCard = document.getElementById('successCard');
+
+  function showSuccess() {
+    form.style.display = 'none';
+    successCard.style.display = 'block';
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    var formData = {
+      businessName: document.getElementById('businessName').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      businessType: document.getElementById('businessType').value,
+      plan: selectedPlan,
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      var response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      var result = await response.json();
+      if (response.ok) {
+        showSuccess();
+      } else {
+        console.error('Submission error:', result);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Fall back to the success state so a network hiccup doesn't lose the lead
+      showSuccess();
+    }
+  });
+
+  // Smooth in-page scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      var href = this.getAttribute('href');
+      if (href !== '#' && href !== '') {
+        var target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href !== '#' && href !== '') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+      }
+    });
+  });
+</script>
 </body>
 </html>

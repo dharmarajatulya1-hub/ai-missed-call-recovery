@@ -394,6 +394,10 @@
               <option value="other">Other Service Business</option>
             </select>
           </div>
+          <label for="smsConsent" style="display:flex; gap:11px; align-items:flex-start; margin-top:4px; cursor:pointer;">
+            <input id="smsConsent" name="smsConsent" type="checkbox" required style="margin-top:2px; width:20px; height:20px; flex-shrink:0; accent-color:#2E5A49; cursor:pointer; box-shadow:0 0 0 1.5px #C9BCA3; border-radius:4px;" />
+            <span style="font-size:12.5px; line-height:1.5; color:#6E665A;">By checking this box and providing my phone number, I agree to receive recurring SMS notifications from Svaraa about my account, leads, and bookings. Msg &amp; data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help. See our <a href="/privacy.html" target="_blank" style="color:#2E5A49; font-weight:600;">Privacy Policy</a> and <a href="/terms.html" target="_blank" style="color:#2E5A49; font-weight:600;">Terms</a>.</span>
+          </label>
           <button type="submit" class="btn-accent" style="margin-top:4px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px; border-radius:11px; border:none; cursor:pointer; font-family:inherit;">Start free trial →</button>
         </form>
       </div>
@@ -433,6 +437,13 @@
           <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
             <a href="mailto:getstarted@svaraa.co" class="foot-link" style="text-decoration:none; color:#4A4438;">getstarted@svaraa.co</a>
             <a href="tel:+12016168355" class="foot-link" style="text-decoration:none; color:#4A4438; font-family:'Spline Sans Mono',monospace;">(201) 616-8355</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8175; margin-bottom:14px;">Legal</div>
+          <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
+            <a href="/privacy.html" class="foot-link" style="text-decoration:none; color:#4A4438;">Privacy Policy</a>
+            <a href="/terms.html" class="foot-link" style="text-decoration:none; color:#4A4438;">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -499,6 +510,7 @@
       phone: document.getElementById('phone').value,
       email: document.getElementById('email').value,
       businessType: document.getElementById('businessType').value,
+      smsConsent: document.getElementById('smsConsent').checked,
       plan: selectedPlan,
       timestamp: new Date().toISOString()
     };

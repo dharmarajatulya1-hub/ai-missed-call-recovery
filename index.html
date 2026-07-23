@@ -15,8 +15,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; max-width: 100%; }
   html { scroll-behavior: smooth; }
+  img, svg, video, iframe { max-width: 100%; }
   ::selection { background: #2E5A49; color: #FBF7F0; }
   section[id] { scroll-margin-top: 84px; }
 
@@ -53,6 +54,18 @@
     .hero-title { font-size: 46px !important; }
     .section-title { font-size: 36px !important; }
   }
+  /* Below ~760px the fixed flex-basis columns stop fitting: let them go full width
+     and pull in the outer/card padding so nothing gets clipped off-screen. */
+  @media (max-width: 760px) {
+    .wrap { padding-left: 22px !important; padding-right: 22px !important; }
+    .col { flex: 1 1 100% !important; min-width: 0 !important; max-width: 100% !important; }
+    .panel { padding: 34px 24px !important; }
+    .panel-blob { width: 150px !important; height: 150px !important; top: -50px !important; right: -40px !important; }
+    .stack-sm { gap: 32px !important; }
+    .pipeline-ends { flex-direction: column !important; align-items: flex-start !important; gap: 12px; }
+    .pipeline-dash { display: none !important; }
+    .footer-cols { gap: 32px !important; }
+  }
   @media (max-width: 560px) {
     .stat-grid { grid-template-columns: 1fr !important; }
     .feature-grid { grid-template-columns: 1fr !important; }
@@ -60,6 +73,15 @@
     .nav-phone { display: none !important; }
     .hero-title { font-size: 38px !important; }
     .section-title { font-size: 28px !important; }
+    .wrap { padding-left: 18px !important; padding-right: 18px !important; }
+    .panel { padding: 28px 20px !important; border-radius: 18px !important; }
+    .lede { font-size: 16.5px !important; }
+    .cta-block { width: 100% !important; justify-content: center !important; }
+    /* 16px keeps iOS Safari from zooming the page in on field focus */
+    .field { font-size: 16px !important; }
+    #intakeForm { padding: 22px !important; }
+    #successCard { padding: 28px 22px !important; }
+    .footer-cols { gap: 26px !important; column-gap: 40px !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
@@ -71,7 +93,7 @@
 
   <!-- NAV -->
   <header style="position:sticky; top:0; z-index:50; background:rgba(251,247,240,0.82); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #EBE2D2;">
-    <nav style="max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <nav class="wrap" style="max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
       <a href="#top" style="display:flex; align-items:center; gap:9px; text-decoration:none;">
         <span style="width:11px; height:11px; border-radius:50%; background:var(--accent); display:inline-block;"></span>
         <span style="font-family:'Newsreader',serif; font-weight:600; font-size:25px; letter-spacing:-0.01em; color:#23201B;">Svaraa</span>
@@ -91,8 +113,8 @@
   </header>
 
   <!-- HERO -->
-  <section id="top" style="max-width:1180px; margin:0 auto; padding:76px 32px 60px; display:flex; gap:60px; align-items:center; flex-wrap:wrap;">
-    <div style="flex:1 1 480px; min-width:320px;">
+  <section id="top" class="wrap stack-sm" style="max-width:1180px; margin:0 auto; padding:76px 32px 60px; display:flex; gap:60px; align-items:center; flex-wrap:wrap;">
+    <div class="col" style="flex:1 1 480px; min-width:320px;">
       <h1 class="hero-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:62px; line-height:1.02; letter-spacing:-0.022em; margin:22px 0 0; color:#23201B; text-wrap:balance;">
         Every missed call is money <span style="font-style:italic; color:var(--accent);">walking out the door.</span>
       </h1>
@@ -100,8 +122,8 @@
         Svaraa answers the calls you can't — in a warm, natural voice — then books the job straight into your calendar. No missed customers. No phone tag. Live in five minutes.
       </p>
       <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:34px;">
-        <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:#fff; font-weight:600; font-size:17px; padding:16px 28px; border-radius:12px; text-decoration:none;">Start free 14-day trial →</a>
-        <a href="#how" class="btn-ghost" style="display:inline-flex; align-items:center; gap:9px; background:transparent; color:#23201B; border:1px solid #D8CDBA; font-weight:600; font-size:17px; padding:16px 26px; border-radius:12px; text-decoration:none;">See how it works</a>
+        <a href="#form" class="btn-accent cta-block" style="display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:#fff; font-weight:600; font-size:17px; padding:16px 28px; border-radius:12px; text-decoration:none;">Start free 14-day trial →</a>
+        <a href="#how" class="btn-ghost cta-block" style="display:inline-flex; align-items:center; gap:9px; background:transparent; color:#23201B; border:1px solid #D8CDBA; font-weight:600; font-size:17px; padding:16px 26px; border-radius:12px; text-decoration:none;">See how it works</a>
       </div>
       <div style="display:flex; gap:26px; flex-wrap:wrap; margin-top:28px; font-size:14.5px; color:#6E665A;">
         <span style="display:inline-flex; align-items:center; gap:8px;"><span style="color:#2E5A49; font-weight:700;">✓</span> No credit card</span>
@@ -111,7 +133,7 @@
     </div>
 
     <!-- VOICE MOTIF -->
-    <div style="flex:1 1 400px; min-width:320px; display:flex; justify-content:center;">
+    <div class="col" style="flex:1 1 400px; min-width:320px; display:flex; justify-content:center;">
       <div style="position:relative; width:100%; max-width:440px;">
         <div style="position:absolute; top:-26px; left:-26px; width:130px; height:130px; border-radius:50%; background:var(--accent); opacity:0.12;"></div>
         <div style="position:absolute; bottom:-30px; right:-20px; width:110px; height:110px; border-radius:50%; background:#2E5A49; opacity:0.12;"></div>
@@ -150,7 +172,7 @@
   <!-- COST BAND -->
   <section style="margin-top:20px;">
   <div style="background:#213E33; color:#EFEAE0;">
-    <div style="max-width:1180px; margin:0 auto; padding:70px 32px;">
+    <div class="wrap" style="max-width:1180px; margin:0 auto; padding:70px 32px;">
       <div style="max-width:640px;">
         <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#9DC3B2; font-weight:500;">The problem</div>
         <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:42px; line-height:1.08; letter-spacing:-0.02em; margin:14px 0 0; color:#FBF7F0;">The quiet math of a missed call</h2>
@@ -179,17 +201,17 @@
   </section>
 
   <!-- HOW IT WORKS -->
-  <section id="how" style="max-width:1180px; margin:0 auto; padding:86px 32px 40px;">
+  <section id="how" class="wrap" style="max-width:1180px; margin:0 auto; padding:86px 32px 40px;">
     <div style="text-align:center; max-width:640px; margin:0 auto;">
       <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">How it works</div>
       <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">From missed to booked in under a minute</h2>
       <p style="font-size:18px; line-height:1.55; color:#5B5346; margin:16px 0 0;">No apps to learn. Svaraa works quietly in the background while you do the job in front of you.</p>
     </div>
-    <div style="margin-top:54px; background:#fff; border:1px solid #EBE2D2; border-radius:22px; padding:44px 40px 40px;">
+    <div class="panel" style="margin-top:54px; background:#fff; border:1px solid #EBE2D2; border-radius:22px; padding:44px 40px 40px;">
       <!-- endpoint labels -->
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:34px;">
+      <div class="pipeline-ends" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:34px;">
         <span style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; color:#A94F31; background:#F7E6DD; padding:7px 13px; border-radius:100px;">☎ Call you missed</span>
-        <span style="flex:1; height:1px; background:repeating-linear-gradient(90deg,#D8CDBA 0 6px,transparent 6px 12px); margin:0 18px;"></span>
+        <span class="pipeline-dash" style="flex:1; height:1px; background:repeating-linear-gradient(90deg,#D8CDBA 0 6px,transparent 6px 12px); margin:0 18px;"></span>
         <span style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; color:#2E5A49; background:#EBF0EA; padding:7px 13px; border-radius:100px;">✓ Job on the books</span>
       </div>
       <!-- pipeline -->
@@ -222,7 +244,7 @@
   </section>
 
   <!-- FEATURES -->
-  <section id="features" style="max-width:1180px; margin:0 auto; padding:66px 32px 40px;">
+  <section id="features" class="wrap" style="max-width:1180px; margin:0 auto; padding:66px 32px 40px;">
     <div style="max-width:640px;">
       <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">What it does</div>
       <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">A receptionist that never clocks out</h2>
@@ -262,17 +284,17 @@
   </section>
 
   <!-- FOUNDING PARTNER -->
-  <section id="founding" style="max-width:1180px; margin:0 auto; padding:66px 32px;">
-    <div style="background:#213E33; border-radius:26px; padding:56px 52px; color:#EFEAE0; position:relative; overflow:hidden;">
-      <div style="position:absolute; top:-60px; right:-40px; width:220px; height:220px; border-radius:50%; background:var(--accent); opacity:0.16;"></div>
-      <div style="position:relative; display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;">
-        <div style="flex:1 1 360px; min-width:300px;">
+  <section id="founding" class="wrap" style="max-width:1180px; margin:0 auto; padding:66px 32px;">
+    <div class="panel" style="background:#213E33; border-radius:26px; padding:56px 52px; color:#EFEAE0; position:relative; overflow:hidden;">
+      <div class="panel-blob" style="position:absolute; top:-60px; right:-40px; width:220px; height:220px; border-radius:50%; background:var(--accent); opacity:0.16;"></div>
+      <div class="stack-sm" style="position:relative; display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;">
+        <div class="col" style="flex:1 1 360px; min-width:300px;">
           <div style="display:inline-flex; align-items:center; gap:8px; font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#FBF7F0; font-weight:600; background:var(--accent); padding:6px 12px; border-radius:100px;">Only 25 spots left</div>
           <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:44px; line-height:1.05; letter-spacing:-0.02em; margin:20px 0 0; color:#FBF7F0;">Founding Partner Program</h2>
           <p style="font-size:18px; line-height:1.55; color:#B9C6BE; margin:16px 0 0; max-width:420px;">We're just getting started — and we're picking a small group of businesses to shape Svaraa and lock in early pricing for good.</p>
-          <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:9px; margin-top:28px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px 26px; border-radius:12px; text-decoration:none;">Become a founding partner →</a>
+          <a href="#form" class="btn-accent cta-block" style="display:inline-flex; align-items:center; gap:9px; margin-top:28px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px 26px; border-radius:12px; text-decoration:none;">Become a founding partner →</a>
         </div>
-        <div style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:2px;">
+        <div class="col" style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:2px;">
           <div style="padding:20px 0; border-top:1px solid #3C6252;">
             <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:21px; margin:0; color:#fff;">Priority onboarding</h3>
             <p style="font-size:15px; line-height:1.5; color:#B9C6BE; margin:8px 0 0;">White-glove setup for your phone system and calendar, so you start booking fast.</p>
@@ -291,7 +313,7 @@
   </section>
 
   <!-- PRICING -->
-  <section id="pricing" style="max-width:1180px; margin:0 auto; padding:56px 32px 40px;">
+  <section id="pricing" class="wrap" style="max-width:1180px; margin:0 auto; padding:56px 32px 40px;">
     <div style="text-align:center; max-width:600px; margin:0 auto;">
       <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">Pricing</div>
       <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:46px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">Simple, transparent pricing</h2>
@@ -344,9 +366,9 @@
   </section>
 
   <!-- CTA FORM -->
-  <section id="form" style="max-width:1180px; margin:0 auto; padding:70px 32px 80px;">
-    <div style="display:flex; gap:56px; flex-wrap:wrap; align-items:center; background:#F5EEE2; border:1px solid #EBE2D2; border-radius:26px; padding:52px;">
-      <div style="flex:1 1 380px; min-width:300px;">
+  <section id="form" class="wrap" style="max-width:1180px; margin:0 auto; padding:70px 32px 80px;">
+    <div class="panel stack-sm" style="display:flex; gap:56px; flex-wrap:wrap; align-items:center; background:#F5EEE2; border:1px solid #EBE2D2; border-radius:26px; padding:52px;">
+      <div class="col" style="flex:1 1 380px; min-width:300px;">
         <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#2E5A49; font-weight:500;">Get started</div>
         <h2 class="section-title" style="font-family:'Newsreader',serif; font-weight:500; font-size:44px; line-height:1.05; letter-spacing:-0.02em; margin:14px 0 0; color:#23201B;">Stop losing calls. Start today.</h2>
         <p style="font-size:18px; line-height:1.55; color:#5B5346; margin:16px 0 0; max-width:420px;">Tell us a little about your business and we'll have Svaraa answering your calls in under five minutes. No credit card required.</p>
@@ -355,7 +377,7 @@
           <span style="display:inline-flex; align-items:center; gap:9px;"><span style="color:#2E5A49; font-weight:700;">✓</span> We'll never share your information</span>
         </div>
       </div>
-      <div style="flex:1 1 380px; min-width:300px;">
+      <div class="col" style="flex:1 1 380px; min-width:300px;">
         <div id="successCard" style="display:none; background:#EBF0EA; border:1px solid #D6E1D3; border-radius:18px; padding:40px; text-align:center;" role="status" aria-live="polite">
           <div style="width:52px; height:52px; border-radius:50%; background:#2E5A49; color:#fff; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto;">✓</div>
           <h3 style="font-family:'Newsreader',serif; font-weight:500; font-size:26px; margin:18px 0 0; color:#23201B;">You're on the list!</h3>
@@ -403,7 +425,7 @@
 
   <!-- FOOTER -->
   <footer style="border-top:1px solid #EBE2D2; background:#F7F1E7;">
-    <div style="max-width:1180px; margin:0 auto; padding:56px 32px 30px; display:flex; gap:48px; flex-wrap:wrap; justify-content:space-between;">
+    <div class="wrap" style="max-width:1180px; margin:0 auto; padding:56px 32px 30px; display:flex; gap:48px; flex-wrap:wrap; justify-content:space-between;">
       <div style="flex:1 1 260px; min-width:240px;">
         <div style="display:flex; align-items:center; gap:9px;">
           <span style="width:11px; height:11px; border-radius:50%; background:var(--accent); display:inline-block;"></span>
@@ -411,7 +433,7 @@
         </div>
         <p style="font-size:15px; color:#6E665A; margin:14px 0 0; line-height:1.5; max-width:260px;">Never lose a customer to a missed call again.</p>
       </div>
-      <div style="display:flex; gap:56px; flex-wrap:wrap;">
+      <div class="footer-cols" style="display:flex; gap:56px; flex-wrap:wrap;">
         <div>
           <div style="font-family:'Spline Sans Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8175; margin-bottom:14px;">Product</div>
           <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
@@ -446,7 +468,7 @@
         </div>
       </div>
     </div>
-    <div style="max-width:1180px; margin:0 auto; padding:20px 32px 40px; border-top:1px solid #EBE2D2; font-size:13.5px; color:#8A8175;">© 2026 Svaraa. All rights reserved.</div>
+    <div class="wrap" style="max-width:1180px; margin:0 auto; padding:20px 32px 40px; border-top:1px solid #EBE2D2; font-size:13.5px; color:#8A8175;">© 2026 Svaraa. All rights reserved.</div>
   </footer>
 
 </div>

@@ -15,7 +15,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; overflow-x: hidden; max-width: 100%; }
+  html, body { margin: 0; padding: 0; max-width: 100%; }
+  /* Only on html — putting overflow-x on body too turns body into its own
+     scroll box, which can swallow scrollIntoView and break the sticky header. */
+  html { overflow-x: hidden; }
   html { scroll-behavior: smooth; }
   img, svg, video, iframe { max-width: 100%; }
   ::selection { background: #2E5A49; color: #FBF7F0; }
@@ -43,9 +46,29 @@
     outline: 3px solid rgba(46,90,73,0.55); outline-offset: 2px; border-radius: 6px;
   }
 
+  /* Mobile menu — the toggle and panel only exist below the nav-links breakpoint */
+  .nav-toggle {
+    display: none; align-items: center; justify-content: center; flex-direction: column; gap: 4px;
+    width: 40px; height: 40px; padding: 0; background: transparent;
+    border: 1px solid #DED4C3; border-radius: 10px; cursor: pointer; flex-shrink: 0;
+  }
+  .nav-toggle:hover { background: #F3ECDF; }
+  .nav-toggle .bar {
+    display: block; width: 18px; height: 2px; border-radius: 2px; background: #23201B;
+    transition: transform .22s ease, opacity .16s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .bar-1 { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .bar-2 { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .bar-3 { transform: translateY(-6px) rotate(-45deg); }
+  #mobileMenu { display: none; }
+  .menu-link { transition: color .2s ease; }
+  .menu-link:hover { color: var(--accent); }
+
   /* Responsive (the source design is desktop-first with fixed grids) */
   @media (max-width: 940px) {
     .nav-links { display: none !important; }
+    .nav-toggle { display: inline-flex; }
+    #mobileMenu.is-open { display: block; }
     .stat-grid { grid-template-columns: repeat(2,1fr) !important; }
     .feature-grid { grid-template-columns: repeat(2,1fr) !important; }
     .pricing-grid { grid-template-columns: 1fr !important; }
@@ -71,6 +94,10 @@
     .feature-grid { grid-template-columns: 1fr !important; }
     .pipeline-grid { grid-template-columns: 1fr !important; }
     .nav-phone { display: none !important; }
+    /* Keep logo + CTA + toggle on one line down to 320px */
+    .nav-cta { font-size: 14px !important; padding: 10px 14px !important; }
+    .nav-bar { gap: 12px !important; }
+    .nav-right { gap: 10px !important; }
     .hero-title { font-size: 38px !important; }
     .section-title { font-size: 28px !important; }
     .wrap { padding-left: 18px !important; padding-right: 18px !important; }
@@ -93,7 +120,7 @@
 
   <!-- NAV -->
   <header style="position:sticky; top:0; z-index:50; background:rgba(251,247,240,0.82); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #EBE2D2;">
-    <nav class="wrap" style="max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <nav class="wrap nav-bar" style="max-width:1180px; margin:0 auto; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
       <a href="#top" style="display:flex; align-items:center; gap:9px; text-decoration:none;">
         <span style="width:11px; height:11px; border-radius:50%; background:var(--accent); display:inline-block;"></span>
         <span style="font-family:'Newsreader',serif; font-weight:600; font-size:25px; letter-spacing:-0.01em; color:#23201B;">Svaraa</span>
@@ -105,11 +132,29 @@
         <a href="#pricing" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">Pricing</a>
         <a href="#founding" class="nav-link" style="text-decoration:none; color:#4A4438; font-size:15.5px; font-weight:500;">Founding program</a>
       </div>
-      <div style="display:flex; align-items:center; gap:18px;">
+      <div class="nav-right" style="display:flex; align-items:center; gap:18px;">
         <a href="tel:+12016168355" class="nav-phone" style="text-decoration:none; color:#23201B; font-size:15px; font-weight:600; font-family:'Spline Sans Mono',monospace; white-space:nowrap;">(201) 616-8355</a>
-        <a href="#form" class="btn-accent" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; font-weight:600; font-size:15px; padding:11px 20px; border-radius:11px; text-decoration:none; white-space:nowrap;">Start free trial</a>
+        <a href="#form" class="btn-accent nav-cta" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; font-weight:600; font-size:15px; padding:11px 20px; border-radius:11px; text-decoration:none; white-space:nowrap;">Start free trial</a>
+        <button type="button" id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="bar bar-1"></span><span class="bar bar-2"></span><span class="bar bar-3"></span>
+        </button>
       </div>
     </nav>
+
+    <!-- MOBILE MENU (revealed by the nav toggle below 940px) -->
+    <div id="mobileMenu" style="border-top:1px solid #EBE2D2; background:#FBF7F0; max-height:calc(100vh - 72px); overflow-y:auto;">
+      <div class="wrap" style="max-width:1180px; margin:0 auto; padding:14px 32px 24px; display:flex; flex-direction:column;">
+        <a href="/demo" class="menu-link" style="text-decoration:none; color:#23201B; font-size:17px; font-weight:500; padding:14px 0; border-bottom:1px solid #EFE7D9;">Watch demo</a>
+        <a href="#how" class="menu-link" style="text-decoration:none; color:#23201B; font-size:17px; font-weight:500; padding:14px 0; border-bottom:1px solid #EFE7D9;">How it works</a>
+        <a href="#features" class="menu-link" style="text-decoration:none; color:#23201B; font-size:17px; font-weight:500; padding:14px 0; border-bottom:1px solid #EFE7D9;">Features</a>
+        <a href="#pricing" class="menu-link" style="text-decoration:none; color:#23201B; font-size:17px; font-weight:500; padding:14px 0; border-bottom:1px solid #EFE7D9;">Pricing</a>
+        <a href="#founding" class="menu-link" style="text-decoration:none; color:#23201B; font-size:17px; font-weight:500; padding:14px 0; border-bottom:1px solid #EFE7D9;">Founding program</a>
+        <a href="tel:+12016168355" class="menu-link" style="text-decoration:none; color:#23201B; font-family:'Spline Sans Mono',monospace; font-size:16px; font-weight:600; padding:16px 0 4px; display:inline-flex; align-items:center; gap:9px;">
+          <span style="color:var(--accent);">☎</span> (201) 616-8355
+        </a>
+        <a href="#form" class="btn-accent" style="display:flex; align-items:center; justify-content:center; margin-top:14px; background:var(--accent); color:#fff; font-weight:600; font-size:16px; padding:15px; border-radius:12px; text-decoration:none;">Start free trial →</a>
+      </div>
+    </div>
   </header>
 
   <!-- HERO -->
@@ -492,6 +537,40 @@
         'animation:svaraaWave ' + dur + 's ease-in-out ' + delay + 's infinite;';
       wrap.appendChild(bar);
     }
+  })();
+
+  // Mobile menu toggle
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('mobileMenu');
+    if (!toggle || !menu) return;
+
+    function setOpen(open) {
+      menu.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Close after picking a destination, so the page isn't hidden behind the panel
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Rotating to landscape can cross the breakpoint while the panel is open
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 940) setOpen(false);
+    });
   })();
 
   // Phone number formatting → (555) 123-4567 (matches the /api/subscribe validation)

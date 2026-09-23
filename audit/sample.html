@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample AI Opportunity Audit · Svaraa.co</title>
+<meta name="description" content="What a Svaraa.co AI Opportunity Audit looks like: a customer-eye snapshot, five ranked fixes with costs and payoff math, and a 30-60-90 day plan.">
+<meta property="og:title" content="Sample AI Opportunity Audit · Svaraa.co">
+<meta property="og:description" content="Where a local service business leaks leads, and the fixes that pay back fastest.">
+<meta property="og:image" content="https://svaraa.co/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f1; --card:#ffffff; --ink:#1d2422; --muted:#5e6663; --line:#e6e0d5;
+    --leak:#c4512a; --leak-soft:#fbe9e1; --win:#2e7a57; --win-soft:#e3f1ea;
+    --gold:#b8862b; --gold-soft:#f6ecd6; --navy:#1f3a4d;
+    --serif:"Fraunces", "Iowan Old Style", Georgia, serif;
+    --sans:"Inter", -apple-system, system-ui, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+  a{color:var(--navy)}
+
+  .banner{background:var(--ink);color:#f3efe6;font-size:13px;text-align:center;padding:9px 16px;letter-spacing:.02em}
+  .banner b{color:#f2c46d}
+
+  /* Cover */
+  header.cover{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.04em;font-size:14px;color:var(--muted);text-transform:uppercase}
+  .brand .dot{width:26px;height:26px;border-radius:50%;background:conic-gradient(var(--leak) 0 30%, var(--gold) 0 60%, var(--win) 0)}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(40px,6vw,64px);line-height:1.02;margin:22px 0 14px;letter-spacing:-.02em}
+  h1 em{font-style:italic;color:var(--leak);font-weight:600}
+  .lede{font-size:19px;color:var(--muted);max-width:640px;margin:0}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:32px}
+  .meta div{background:var(--card);padding:14px 16px}
+  .meta small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .meta span{font-weight:600}
+
+  /* Sections */
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--leak)}
+  h2{font-family:var(--serif);font-size:clamp(28px,4vw,38px);line-height:1.1;margin:8px 0 12px;letter-spacing:-.01em}
+  .sub{color:var(--muted);max-width:660px;margin:0 0 28px}
+
+  /* Bottom line */
+  .bottomline{background:var(--ink);color:#f3efe6;border-radius:18px;padding:32px;display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center}
+  .bottomline h3{font-family:var(--serif);font-size:26px;line-height:1.2;margin:0 0 10px;font-weight:600}
+  .bottomline p{margin:0;color:#c9c4b8}
+  .bl-num{text-align:center;border-left:1px solid #3a4441;padding-left:28px}
+  .bl-num .big{font-family:var(--serif);font-size:54px;font-weight:700;color:#f2c46d;line-height:1}
+  .bl-num small{display:block;color:#c9c4b8;margin-top:6px;font-size:13px}
+
+  /* Stat tiles */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .tile .v{font-family:var(--serif);font-size:36px;font-weight:700;line-height:1;color:var(--leak)}
+  .tile .v.ok{color:var(--win)}
+  .tile .l{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+  /* Journey */
+  .journey{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 22px 18px}
+  .journey svg{width:100%;height:auto;display:block}
+  .journey-cap{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+
+  /* Scorecard */
+  .score{display:grid;gap:10px;margin-top:28px}
+  .row{display:grid;grid-template-columns:170px 1fr 64px;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .row b{font-weight:600}
+  .row .ev{font-size:14px;color:var(--muted);line-height:1.45}
+  .grade{justify-self:end;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:20px}
+  .g-a{background:var(--win-soft);color:var(--win)} .g-c{background:var(--gold-soft);color:var(--gold)} .g-d{background:var(--leak-soft);color:var(--leak)}
+
+  .pattern{margin-top:26px;border-left:4px solid var(--leak);background:var(--leak-soft);padding:16px 20px;border-radius:0 12px 12px 0;font-size:17px}
+  .pattern b{font-family:var(--serif)}
+
+  /* Matrix */
+  .matrix-wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin-bottom:34px}
+  .matrix{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+  .matrix svg{width:100%;height:auto;display:block}
+  .legend-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+  .legend-list li{display:flex;gap:12px;align-items:baseline}
+  .legend-list .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+  .legend-list small{color:var(--muted)}
+
+  /* Win cards */
+  .win{background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:18px;overflow:hidden}
+  .win-head{display:flex;gap:18px;align-items:center;padding:22px 26px;border-bottom:1px solid var(--line)}
+  .win-num{flex:none;width:52px;height:52px;border-radius:14px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:26px;font-weight:700}
+  .win-head h3{font-family:var(--serif);font-size:24px;margin:0;line-height:1.15}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chip{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:#f1ede5;color:var(--muted)}
+  .chip.low{background:var(--win-soft);color:var(--win)} .chip.med{background:var(--gold-soft);color:var(--gold)} .chip.hot{background:var(--leak-soft);color:var(--leak)}
+  .win-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .win-body > div{padding:20px 26px}
+  .win-body > div + div{border-left:1px solid var(--line)}
+  .k{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  .k.leak{color:var(--leak)} .k.win{color:var(--win)}
+  .win-body p{margin:0 0 14px;font-size:15px}
+  .win-body p:last-child{margin-bottom:0}
+  .sms{background:#eef1f4;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:14px;max-width:320px;margin:4px 0 14px;color:#223}
+  .math{background:var(--win-soft);border-radius:12px;padding:14px 16px;font-size:14px}
+  .math .eq{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:13px;color:var(--ink);display:block;margin:6px 0}
+  .math .res{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--win)}
+  .assume{font-size:12px;color:var(--muted);margin-top:6px}
+
+  /* Timeline */
+  .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative}
+  .phase{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;position:relative}
+  .phase .days{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .phase h4{font-family:var(--serif);font-size:22px;margin:4px 0 12px}
+  .phase ul{margin:0;padding-left:18px;font-size:15px}
+  .phase li{margin-bottom:6px}
+  .phase .bar{height:6px;border-radius:99px;margin-bottom:16px}
+  .p1 .bar{background:var(--leak)} .p1 .days{color:var(--leak)}
+  .p2 .bar{background:var(--gold)} .p2 .days{color:var(--gold)}
+  .p3 .bar{background:var(--win)} .p3 .days{color:var(--win)}
+
+  /* Cost table */
+  table{width:100%;border-collapse:collapse;margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px}
+  th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line)}
+  th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:#f6f2ea}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;background:#f6f2ea}
+
+  /* Close */
+  .next{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .next-card{border-radius:18px;padding:26px}
+  .next-card.a{background:var(--card);border:1px solid var(--line)}
+  .next-card.b{background:var(--navy);color:#eef2f4}
+  .next-card h4{font-family:var(--serif);font-size:22px;margin:0 0 8px}
+  .next-card p{margin:0;font-size:15px}
+  .next-card.b p{color:#c6d2da}
+  .promise{margin-top:22px;text-align:center;font-family:var(--serif);font-size:20px;font-style:italic;color:var(--muted)}
+
+  footer{padding:36px 0 60px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:760px){
+    .meta,.tiles{grid-template-columns:1fr 1fr}
+    .bottomline,.matrix-wrap,.win-body,.timeline,.next{grid-template-columns:1fr}
+    .bl-num{border-left:0;padding-left:0;border-top:1px solid #3a4441;padding-top:20px}
+    .win-body > div + div{border-left:0;border-top:1px solid var(--line)}
+    .row{grid-template-columns:1fr 52px}
+    .row .ev{grid-column:1 / -1;grid-row:2}
+  }
+  @media print{
+    body{background:#fff;font-size:13px}
+    .banner{background:#fff;color:#333;border-bottom:1px solid #ccc}
+    section{break-inside:avoid-page;padding:32px 0}
+    .win,.phase,.row{break-inside:avoid}
+    a[href]{text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner"><b>SAMPLE REPORT</b> · “Oak &amp; Ember Heating &amp; Air” is a made-up business. The format is what a real audit looks like.</div>
+
+<div class="wrap">
+
+<!-- COVER -->
+<header class="cover">
+  <div class="brand"><span class="dot"></span>Svaraa.co · AI Opportunity Audit</div>
+  <h1>Your customers are trying to reach you. <em>Some can't.</em></h1>
+  <p class="lede">A plain look at where you lose leads, which fixes pay back fastest, and what order to do them in. No jargon.</p>
+  <div class="meta">
+    <div><small>Prepared for</small><span>Oak &amp; Ember Heating &amp; Air</span></div>
+    <div><small>Service area</small><span>Triangle, NC</span></div>
+    <div><small>Date</small><span>September 2026</span></div>
+    <div><small>Prepared by</small><span>Atulya · Svaraa.co</span></div>
+  </div>
+</header>
+
+<!-- BOTTOM LINE -->
+<section>
+  <div class="bottomline">
+    <div>
+      <div class="eyebrow" style="color:#f2c46d">The bottom line</div>
+      <h3>People find you, but many don't get an answer after hours. Start with fix #1. It takes a week and should pay for itself in the first month.</h3>
+      <p>Five fixes are ranked below. Two take one afternoon to set up. None of them need new hardware or a new phone number.</p>
+    </div>
+    <div class="bl-num">
+      <div class="big">~$3,800</div>
+      <small>estimated monthly revenue fix #1 could win back<br>(math and assumptions shown below)</small>
+    </div>
+  </div>
+</section>
+
+<!-- PART 1: SNAPSHOT -->
+<section>
+  <div class="eyebrow">Part 1 · Snapshot</div>
+  <h2>Your business, seen by a customer at 7 PM on a Saturday</h2>
+  <p class="sub">We looked for you, called you, and tried to book with you, the way a customer with a broken AC would. Everything here is something we saw or tested ourselves.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">0 / 3</div><div class="l">after-hours test calls answered or texted back</div></div>
+    <div class="tile"><div class="v">3.9★</div><div class="l">Google rating (87 reviews). Top 3 local competitors average 4.6★</div></div>
+    <div class="tile"><div class="v">5 mo</div><div class="l">since the last owner reply to a Google review</div></div>
+    <div class="tile"><div class="v">No</div><div class="l">way to book online. The website only has a contact form</div></div>
+  </div>
+
+  <div class="journey">
+    <svg viewBox="0 0 860 190" role="img" aria-label="Customer journey with leak points">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b2a4"/></marker>
+      </defs>
+      <!-- line -->
+      <line x1="70" y1="70" x2="790" y2="70" stroke="#d8d1c3" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+      <!-- stages -->
+      <g font-family="Inter, system-ui, sans-serif" text-anchor="middle">
+        <g transform="translate(70,70)"><circle r="30" fill="#e3f1ea"/><text y="6" font-size="20">🔍</text><text y="56" font-size="14" font-weight="600" fill="#1d2422">Finds you</text><text y="74" font-size="12" fill="#2e7a57">Works ✓</text></g>
+        <g transform="translate(250,70)"><circle r="30" fill="#f6ecd6"/><text y="6" font-size="20">⭐</text><text y="56" font-size="14" font-weight="600" fill="#1d2422">Reads reviews</text><text y="74" font-size="12" fill="#b8862b">3.9★, 6 unanswered 1-stars</text></g>
+        <g transform="translate(430,70)"><circle r="30" fill="#fbe9e1"/><text y="6" font-size="20">📞</text><text y="56" font-size="14" font-weight="600" fill="#1d2422">Calls</text><text y="74" font-size="12" fill="#c4512a">Voicemail after 6 PM</text></g>
+        <g transform="translate(610,70)"><circle r="30" fill="#fbe9e1"/><text y="6" font-size="20">📅</text><text y="56" font-size="14" font-weight="600" fill="#1d2422">Tries to book</text><text y="74" font-size="12" fill="#c4512a">Contact form only</text></g>
+        <g transform="translate(790,70)"><circle r="30" fill="#f6ecd6"/><text y="6" font-size="20">📄</text><text y="56" font-size="14" font-weight="600" fill="#1d2422">Gets a quote</text><text y="74" font-size="12" fill="#b8862b">No follow-up</text></g>
+      </g>
+      <!-- leak drips -->
+      <g fill="#c4512a" opacity=".85">
+        <path d="M430 160 q-7 12 0 18 q7 -6 0 -18z"/><path d="M610 160 q-7 12 0 18 q7 -6 0 -18z"/>
+        <path d="M250 162 q-5 9 0 13 q5 -4 0 -13z" fill="#b8862b"/><path d="M790 162 q-5 9 0 13 q5 -4 0 -13z" fill="#b8862b"/>
+      </g>
+    </svg>
+    <div class="journey-cap">Red = a big leak. Amber = a slow leak. Every fix in Part 2 closes one of these.</div>
+  </div>
+
+  <div class="score">
+    <div class="row"><b>Search visibility</b><span class="ev">Shows up in the Google map results for “AC repair near me.” The website works well on phones.</span><span class="grade g-a">A</span></div>
+    <div class="row"><b>Phone, after hours</b><span class="ev">We called Sat 7:42 PM, Sun 11:15 AM, and Tue 6:30 PM. All three went to voicemail and no text came back. 11 of your last 20 reviews mention calls that weren't returned.</span><span class="grade g-d">D</span></div>
+    <div class="row"><b>Reputation</b><span class="ev">3.9★. Six 1-star reviews from last quarter have no reply, and no customers are being asked to leave reviews.</span><span class="grade g-d">D</span></div>
+    <div class="row"><b>Booking</b><span class="ev">The only option is a contact form that says “we'll get back to you.” There's no way to pick a time or get an instant estimate.</span><span class="grade g-c">C</span></div>
+    <div class="row"><b>Quote follow-up</b><span class="ev">We asked for an estimate through the form. It arrived 2 days later, and we got no follow-up after that.</span><span class="grade g-c">C</span></div>
+  </div>
+
+  <p class="pattern"><b>The pattern:</b> Customers want to hire you, but some of them fall through the cracks. They find you, can't reach you, and call the next company on the list. Each fix below closes one of those gaps.</p>
+</section>
+
+<!-- PART 2: QUICK WINS -->
+<section>
+  <div class="eyebrow">Part 2 · Quick wins</div>
+  <h2>Five fixes, ranked by payoff</h2>
+  <p class="sub">Start at the top left of the chart: less effort, more payoff.</p>
+
+  <div class="matrix-wrap">
+    <div class="matrix">
+      <svg viewBox="0 0 400 320" role="img" aria-label="Effort versus payoff matrix">
+        <rect x="50" y="10" width="170" height="130" fill="#e3f1ea" rx="8"/>
+        <text x="60" y="30" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2e7a57" letter-spacing="1">DO FIRST</text>
+        <line x1="50" y1="270" x2="390" y2="270" stroke="#1d2422" stroke-width="1.5"/>
+        <line x1="50" y1="270" x2="50" y2="10" stroke="#1d2422" stroke-width="1.5"/>
+        <line x1="220" y1="10" x2="220" y2="270" stroke="#e6e0d5" stroke-dasharray="4 4"/>
+        <line x1="50" y1="140" x2="390" y2="140" stroke="#e6e0d5" stroke-dasharray="4 4"/>
+        <text x="220" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5e6663">Effort to set up →</text>
+        <text x="20" y="140" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5e6663" transform="rotate(-90 20 140)">Payoff →</text>
+        <g font-family="Fraunces,Georgia,serif" font-weight="700" font-size="16" fill="#fff" text-anchor="middle">
+          <circle cx="100" cy="50" r="20" fill="#c4512a"/><text x="100" y="56">1</text>
+          <circle cx="160" cy="110" r="20" fill="#1d2422"/><text x="160" y="116">4</text>
+          <circle cx="130" cy="170" r="20" fill="#1d2422"/><text x="130" y="176">2</text>
+          <circle cx="270" cy="150" r="20" fill="#1d2422"/><text x="270" y="156">3</text>
+          <circle cx="330" cy="90" r="20" fill="#b8862b"/><text x="330" y="96">5</text>
+        </g>
+      </svg>
+    </div>
+    <ol class="legend-list">
+      <li><span class="n">1</span><div><b>Text back missed calls</b><br><small>Easy · ~$3,800/mo estimated · live in 1 week</small></div></li>
+      <li><span class="n">2</span><div><b>Ask for reviews and reply to them</b><br><small>Easy · gains build month over month</small></div></li>
+      <li><span class="n">3</span><div><b>Online booking</b><br><small>Medium · saves ~5 staff hrs/week</small></div></li>
+      <li><span class="n">4</span><div><b>Automatic quote follow-up</b><br><small>Easy · 1–2 extra installs a month</small></div></li>
+      <li><span class="n">5</span><div><b>AI receptionist after hours</b><br><small>Medium · phase 2, once #1 is measured</small></div></li>
+    </ol>
+  </div>
+
+  <!-- WIN 1 -->
+  <article class="win">
+    <div class="win-head">
+      <div class="win-num">1</div>
+      <div>
+        <h3>Missed-call text-back</h3>
+        <div class="chips"><span class="chip low">Easy · 1 afternoon</span><span class="chip">~$30–100 / mo</span><span class="chip hot">Biggest revenue impact</span></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div>
+        <p class="k leak">What's going wrong</p>
+        <p>After 6 PM and on weekends, calls go to voicemail. Most callers hang up without leaving a message and call a competitor. All three of our test calls ended this way.</p>
+        <p class="k">What the fix does</p>
+        <p>When a call goes unanswered, the caller gets a text within seconds:</p>
+        <div class="sms">Sorry we missed you! This is Oak &amp; Ember Heating &amp; Air. Reply here and we'll get you scheduled. If it's an emergency, text URGENT.</div>
+        <p>The rest of the conversation happens by text. Urgent jobs get flagged to the on-call tech.</p>
+        <p class="k">Tools</p>
+        <p>A missed-call text-back service that works with your current number. Many field-service platforms include one, or you can add a standalone tool. No new hardware.</p>
+      </div>
+      <div>
+        <p class="k win">Estimated payoff</p>
+        <div class="math">
+          <span class="eq">40 missed calls/mo × 25% book by text × $380 avg ticket</span>
+          <span class="res">≈ $3,800 / month</span>
+          <div class="assume">Assumptions: 40 missed calls/month is our guess. Your phone logs will show the real number, and we'll redo this math with it. $380 is a typical HVAC service ticket.</div>
+        </div>
+        <p style="margin-top:14px"><b>Why it's first:</b> Even at a quarter of this estimate, it covers its own cost in the first week.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- WIN 2 -->
+  <article class="win">
+    <div class="win-head">
+      <div class="win-num">2</div>
+      <div>
+        <h3>Review requests + review replies</h3>
+        <div class="chips"><span class="chip low">Easy</span><span class="chip">~$75–300 / mo depending on platform</span><span class="chip">Gains build over time</span></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div>
+        <p class="k leak">What's going wrong</p>
+        <p>The first thing new customers see is six unanswered 1-star reviews. Happy customers are never asked to leave a review, so the rating keeps slipping while competitors sit at 4.6★.</p>
+        <p class="k">What the fix does</p>
+        <p>Each finished job sends the customer a text asking for a Google review. Each new review comes with a drafted reply you can approve in one tap. Bad reviews get flagged right away so you can reply the same day.</p>
+        <p class="k">Tools</p>
+        <p>A review-automation tool that connects to your scheduling software, or the review feature built into it.</p>
+      </div>
+      <div>
+        <p class="k win">Estimated payoff</p>
+        <div class="math">
+          <span class="eq">Target: 3.9★ → 4.4★ in ~6 months</span>
+          <span class="res">Closes most of the gap with competitors</span>
+          <div class="assume">We'll track how many calls come from your Google profile each month (Google Business Profile shows this for free), so you'll see the real effect instead of taking our word for it.</div>
+        </div>
+        <p style="margin-top:14px"><b>Do this week, free:</b> reply to the six 1-star reviews yourself. We've drafted all six replies in the appendix of your real audit.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- WIN 3 -->
+  <article class="win">
+    <div class="win-head">
+      <div class="win-num">3</div>
+      <div>
+        <h3>Online booking for tune-ups &amp; estimates</h3>
+        <div class="chips"><span class="chip med">Medium effort</span><span class="chip">$0 if your software includes it</span><span class="chip">Saves staff time</span></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div>
+        <p class="k leak">What's going wrong</p>
+        <p>The contact form doesn't let anyone actually book. A customer who wants to schedule a tune-up at 10 PM has to wait until someone calls back, and many won't.</p>
+        <p class="k">What the fix does</p>
+        <p>Customers can book tune-ups, maintenance visits, and free estimates online. Bookings sync to your techs' calendars. Emergencies still go to the phone.</p>
+        <p class="k">Tools</p>
+        <p>The booking feature in your field-service software (Jobber, Housecall Pro, etc.) or a simple scheduler embedded on your site.</p>
+      </div>
+      <div>
+        <p class="k win">Estimated payoff</p>
+        <div class="math">
+          <span class="eq">~5 hrs/week of phone scheduling × 4 weeks</span>
+          <span class="res">≈ 20 staff hours / month back</span>
+          <div class="assume">You also catch customers who'd rather book online than call, which the phone alone can't do.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- WIN 4 -->
+  <article class="win">
+    <div class="win-head">
+      <div class="win-num">4</div>
+      <div>
+        <h3>Quote follow-up on autopilot</h3>
+        <div class="chips"><span class="chip low">Easy</span><span class="chip">Often included with #1's platform</span><span class="chip hot">Money you're already owed</span></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div>
+        <p class="k leak">What's going wrong</p>
+        <p>Estimates go out and customers never hear from you again. When we requested one, we got no follow-up at all.</p>
+        <p class="k">What the fix does</p>
+        <p>Every undecided quote gets three automatic follow-ups:</p>
+        <p style="font-size:14px"><b>Day 1</b> text: “Any questions on your estimate?”<br><b>Day 4</b> email with financing options<br><b>Day 10</b> “this quote expires soon” reminder</p>
+      </div>
+      <div>
+        <p class="k win">Estimated payoff</p>
+        <div class="math">
+          <span class="eq">25 quotes/mo × 60% unsold = 15 lost<br>win back 10% of those ≈ 1–2 installs</span>
+          <span class="res">≈ $6,000–12,000 / month</span>
+          <div class="assume">Assumes quote volume and a $6k average install. Plug in your real numbers and the math adjusts.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- WIN 5 -->
+  <article class="win">
+    <div class="win-head">
+      <div class="win-num">5</div>
+      <div>
+        <h3>AI receptionist for after-hours calls</h3>
+        <div class="chips"><span class="chip med">Medium effort</span><span class="chip">~$150–500 / mo</span><span class="chip">Phase 2</span></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div>
+        <p class="k leak">What's going wrong</p>
+        <p>Text-back (#1) catches most missed callers. But someone with no heat at 2 AM wants a voice on the line.</p>
+        <p class="k">What the fix does</p>
+        <p>An AI phone agent answers after hours, sorts emergencies from routine calls, and books jobs straight into your schedule. Real emergencies are passed to the on-call tech.</p>
+      </div>
+      <div>
+        <p class="k win">When to add it</p>
+        <div class="math">
+          <span class="res" style="font-size:20px">Decide after 60 days of #1</span>
+          <div class="assume">By then you'll know your real after-hours call volume. If 1–2 emergency jobs a month are slipping through, it pays for itself.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- PART 3: ROADMAP -->
+<section>
+  <div class="eyebrow">Part 3 · Roadmap</div>
+  <h2>Your 30-60-90 day plan</h2>
+  <p class="sub">Easiest wins first. Each phase uses the numbers from the one before it.</p>
+
+  <div class="timeline">
+    <div class="phase p1"><div class="bar"></div><div class="days">Days 1–30</div><h4>Stop the leaks</h4>
+      <ul><li>Turn on missed-call text-back (#1)</li><li>Reply to the six 1-star reviews</li><li>Start automatic review requests (#2)</li></ul></div>
+    <div class="phase p2"><div class="bar"></div><div class="days">Days 31–60</div><h4>Make booking easy</h4>
+      <ul><li>Launch online booking (#3)</li><li>Turn on the 3-step quote follow-up (#4)</li></ul></div>
+    <div class="phase p3"><div class="bar"></div><div class="days">Days 61–90</div><h4>Build on what works</h4>
+      <ul><li>Check the real numbers from #1–#4</li><li>Try the AI receptionist (#5) if the numbers justify it</li><li>Run the review check again (target 4.4★)</li></ul></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Fix</th><th>Phase</th><th class="num">New software / mo</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Missed-call text-back</td><td>Days 1–30</td><td class="num">$30–100</td></tr>
+      <tr><td>2 · Reviews</td><td>Days 1–30</td><td class="num">$75–300</td></tr>
+      <tr><td>3 · Online booking</td><td>Days 31–60</td><td class="num">$0–50</td></tr>
+      <tr><td>4 · Quote follow-up</td><td>Days 31–60</td><td class="num">often $0 (bundled)</td></tr>
+      <tr class="total"><td>Phases 1–2 total</td><td></td><td class="num">≈ $105–450 / mo</td></tr>
+    </tbody>
+  </table>
+  <p class="assume">Price ranges were checked in September 2026. They vary by plan and many tools overlap, so one platform can often cover #1, #2, and #4.</p>
+</section>
+
+<!-- CLOSE -->
+<section style="border-bottom:0">
+  <div class="eyebrow">What happens next</div>
+  <h2>Two ways to use this</h2>
+  <div class="next">
+    <div class="next-card a"><h4>Do it yourself</h4><p>Everything above is yours to keep: the tools, the order, and the math. Most owners can set up #1 and #2 in an afternoon.</p></div>
+    <div class="next-card b"><h4>Have us set it up</h4><p>Want #1 working this week without the hassle? We'll set it up, test it with real calls, and send you the first month's numbers. Just reply to the email this came with.</p></div>
+  </div>
+  <p class="promise">A real audit uses your actual website, reviews, calls, and competitors, and it's delivered in 5 business days. If we find nothing worth fixing, we'll say so and you won't pay.</p>
+</section>
+
+</div>
+
+<div class="wrap"><footer><span><a href="/">← Back to Svaraa.co</a> · Prepared by Atulya</span><span>Sample report. Every business detail is made up.</span></footer></div>
+
+</body>
+</html>

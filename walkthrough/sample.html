@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>60-Second Listing Walkthrough · Svaraa.co</title>
+<meta name="description" content="A cinematic 60-second walkthrough video made from your listing photos. Flat per-property price, back in 48 hours, and your first video is free.">
+<meta property="og:title" content="Watch the 60-second sample walkthrough">
+<meta property="og:description" content="One listing, five rooms, made from the listing photos. Flat price per property, 48-hour turnaround.">
+<meta property="og:image" content="https://svaraa.co/walkthrough/media/og.jpg">
+<meta property="og:type" content="video.other">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1012; --panel:#17181b; --line:#2a2b2f; --ink:#f6efe4; --muted:#b4ab9e; --brass:#d9b98a; --brass-deep:#b8945f;
+    --serif:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --sans:"Jost", -apple-system, system-ui, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans)}
+  a{color:var(--brass)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  @media (max-width:560px){ .wrap{padding:0 16px} }
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .brand{font-weight:500;letter-spacing:.18em;font-size:13px;text-transform:uppercase;color:var(--muted)}
+  .brand b{color:var(--ink);font-weight:600}
+  @media (max-width:560px){ .brand-sub{display:none} }
+  .top a.cta-sm{white-space:nowrap;font-size:14px;font-weight:500;text-decoration:none;color:var(--bg);background:var(--brass);padding:9px 16px;border-radius:999px}
+
+  .hero{padding:36px 0 28px;text-align:center}
+  .eyebrow{font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass)}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,7vw,76px);line-height:1.02;margin:16px auto 16px;max-width:880px;letter-spacing:-.01em}
+  h1 em{color:var(--brass);font-style:italic}
+  .lede{color:var(--muted);font-size:clamp(17px,2.2vw,20px);max-width:620px;margin:0 auto}
+
+  .player{margin:36px auto 0;max-width:1040px;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.55);background:#000;aspect-ratio:16/9}
+  .player video{display:block;width:100%;height:100%}
+  .caption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:14px;color:var(--muted);padding:14px 4px 0}
+  .caption b{color:var(--ink);font-weight:500}
+
+  .rooms{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin:40px 0 0;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .rooms div{background:var(--panel);padding:16px 14px;text-align:center}
+  .rooms small{display:block;font-size:11.5px;letter-spacing:.22em;color:var(--brass)}
+  .rooms span{font-family:var(--serif);font-size:22px}
+  @media (max-width:640px){ .rooms{grid-template-columns:repeat(2,1fr)} .rooms div:last-child{grid-column:span 2} }
+
+  section{padding:72px 0 0}
+  h2{font-family:var(--serif);font-weight:500;font-size:clamp(32px,4.6vw,48px);line-height:1.05;margin:10px 0 14px}
+  .sub{color:var(--muted);max-width:620px;margin:0}
+
+  .offer{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;margin-top:30px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+  .card .v{font-family:var(--serif);font-size:54px;line-height:1;color:var(--ink)}
+  .card .v small{font-family:var(--sans);font-size:16px;color:var(--muted);margin-left:6px}
+  .card h3{margin:14px 0 6px;font-size:17px;font-weight:600;letter-spacing:.01em}
+  .card p{margin:0;color:var(--muted);font-size:15.5px}
+  .card.free{background:linear-gradient(160deg,#2a2419 0%,#17181b 70%);border-color:#4a3e2b}
+  .card.free .v{color:var(--brass)}
+  @media (max-width:760px){ .offer{grid-template-columns:1fr} }
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:30px;counter-reset:s}
+  .step{border-top:1px solid var(--line);padding-top:18px}
+  .step::before{counter-increment:s;content:"0" counter(s);display:block;font-size:12.5px;letter-spacing:.24em;color:var(--brass);margin-bottom:8px}
+  .step h3{margin:0 0 6px;font-family:var(--serif);font-weight:500;font-size:26px}
+  .step p{margin:0;color:var(--muted);font-size:15.5px}
+  @media (max-width:760px){ .steps{grid-template-columns:1fr;gap:20px} }
+
+  .get{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin:26px 0 0;padding:0;list-style:none}
+  .get li{padding:12px 0 12px 30px;border-bottom:1px solid var(--line);position:relative;color:var(--ink)}
+  .get li::before{content:"";position:absolute;left:4px;top:21px;width:12px;height:2px;background:var(--brass)}
+  @media (max-width:640px){ .get{grid-template-columns:1fr} }
+
+  .close{margin:80px 0 0;padding:48px 28px;border-radius:20px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,#2a2419 0%,#141517 62%);border:1px solid #3a3226}
+  .close h2{margin:0 0 10px}
+  .btn{display:inline-block;margin-top:24px;font-weight:600;font-size:17px;text-decoration:none;color:var(--bg);background:var(--brass);padding:15px 28px;border-radius:999px;transition:background .2s}
+  .btn:hover{background:#e6c99d}
+  .fine{font-size:13.5px;color:var(--muted);margin-top:14px}
+
+  footer{padding:48px 0 56px;color:#7e776d;font-size:13px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+  footer a{color:#a79f93}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><b>Svaraa</b>.co<span class="brand-sub"> · Listing Walkthroughs</span></div>
+    <a class="cta-sm" href="#free">Get a free video</a>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">For listing agents</div>
+    <h1>Your listing photos, as a <em>cinematic</em> walkthrough.</h1>
+    <p class="lede">A 60-second video tour made from the photos you already have. You don't need a shoot or a visit. Flat price per property, delivered in 48 hours.</p>
+  </header>
+
+  <div class="player">
+    <video controls playsinline preload="metadata" poster="/walkthrough/media/frame.jpg">
+      <source src="/walkthrough/media/porcino-60s-720p.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="caption">
+    <span><b>Sample:</b> 209 Porcino Lane, Holly Springs NC. One home, start to finish, built only from its listing photos.</span>
+    <span>Listing courtesy of RE/MAX Executive</span>
+  </div>
+
+  <div class="rooms" aria-label="Five-room flow">
+    <div><small>01</small><span>Exterior</span></div>
+    <div><small>02</small><span>Living room</span></div>
+    <div><small>03</small><span>Kitchen</span></div>
+    <div><small>04</small><span>Dining</span></div>
+    <div><small>05</small><span>Bedroom</span></div>
+  </div>
+
+  <section>
+    <div class="eyebrow">The offer</div>
+    <h2>One flat price. No packages, no subscription.</h2>
+    <p class="sub">Every property gets the same treatment you just watched: AI depth-mapped camera moves, room titles, and music.</p>
+    <div class="offer">
+      <div class="card free" id="free">
+        <div class="v">Free</div>
+        <h3>Your first video</h3>
+        <p>Pick one active listing. We'll make its walkthrough at no cost, so you can judge the result on your own home.</p>
+      </div>
+      <div class="card">
+        <div class="v" data-price>$79<small>/ property</small></div>
+        <h3>Flat per-property pricing</h3>
+        <p>The same price for a condo or an estate. Pay only for the listings you want.</p>
+      </div>
+      <div class="card">
+        <div class="v">48<small>hours</small></div>
+        <h3>Turnaround</h3>
+        <p>Send the listing link and your finished MP4 comes back within two days.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">How it works</div>
+    <h2>Three steps, about two minutes of your time.</h2>
+    <div class="steps">
+      <div class="step"><h3>Send the listing</h3><p>Reply with the MLS or Zillow link, or attach the photos.</p></div>
+      <div class="step"><h3>We build the walk</h3><p>We sequence it exterior to bedroom, add motion and titles, and score it.</p></div>
+      <div class="step"><h3>Post it anywhere</h3><p>A ready MP4 for your virtual-tour link, YouTube, email and social.</p></div>
+    </div>
+    <ul class="get">
+      <li>60 seconds, one property start to finish</li>
+      <li>1080p MP4, ready to upload</li>
+      <li>Address, beds, baths and square footage on the title card</li>
+      <li>Your name and brokerage on the end card</li>
+      <li>Original music, no licensing to sort out</li>
+      <li>16:9 for your virtual-tour link and YouTube</li>
+    </ul>
+  </section>
+
+  <div class="close">
+    <div class="eyebrow">First video free</div>
+    <h2>Want to see one of your own listings?</h2>
+    <p class="sub" style="margin:0 auto">Send one active listing and we'll send back its walkthrough within 48 hours.</p>
+    <a class="btn" href="mailto:getstarted@svaraa.co?subject=Free%20walkthrough%20for%20my%20listing&body=Listing%20link%3A%20">Claim the free video</a>
+    <div class="fine">Or just reply to the email this link came in.</div>
+  </div>
+
+  <footer>
+    <span>© 2026 Svaraa.co</span>
+    <span>Sample built from public listing photos for demonstration. <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+  </footer>
+</div>
+</body>
+</html>
